@@ -77,9 +77,7 @@
 */
 
 /* for semi-full height websites with next.js use #__next and with react use #root */
-/*
-#__next,
-#root {
+#__next {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -89,7 +87,6 @@
     flex-direction: column;
     min-height: 100vh;
 }
-*/
 
 html,
 body {
@@ -715,12 +712,9 @@ template {
 
 /* use with the <main> element on pages */
 .main-container {
-    /* enable flex: 1; on the next line for full or semi-full height websites */
-    /*
     -webkit-box-flex: 1;
     -ms-flex: 1;
     flex: 1;
-    */
     width: 100%;
     min-width: var(--container-min-width);
     max-width: var(--container-max-width);

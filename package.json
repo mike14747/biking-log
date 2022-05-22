@@ -4,8 +4,12 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "lint": "next lint"
+        "lint": "next lint",
+        "dev": "next dev",
+        "debug": "cross-env NODE_OPTIONS='--inspect' next dev",
+        "build": "next build",
+        "start": "next start",
+        "test": "jest"
     },
     "repository": {
         "type": "git",
