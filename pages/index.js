@@ -8,8 +8,9 @@ export default function Home() {
                     Biking Log
                 </title>
             </Head>
+
             <div>
-                This is the homepage.
+                <p>This is the homepage.</p>
             </div>
         </>
 

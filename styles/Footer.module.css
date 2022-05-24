@@ -1,0 +1,8 @@
+.footer {
+    padding: 0.25rem;
+    border-top: 2px var(--mg-green) solid;
+}
+
+.copyright {
+    text-align: center;
+}

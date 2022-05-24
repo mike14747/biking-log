@@ -1,7 +1,8 @@
 const Loading = () => {
     return (
         <div id="loading">
-            <img src="/images/loading/loading.gif" alt="Loading" />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/loading.gif" alt="Loading" />
             <style jsx>{`
                 #loading {
                     text-align: center;
