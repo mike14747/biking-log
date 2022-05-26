@@ -19,10 +19,10 @@ export default async function users(req, res) {
         }
     } else if (req.method === 'POST') {
         // this is where a new user is trying to register
-        if (!req.body.email || !req.body.password) res.status(401).end();
+        if (!req.body.username || !req.body.password || !req.body.email) res.status(401).end();
 
         try {
-            const response = await registerNewUser(req.body.email, req.body.password);
+            const response = await registerNewUser(req.body.username, req.body.password, req.body.email);
             response?.code ? res.status(response.code).end() : res.status(500).end();
         } catch (error) {
             console.error(error);

@@ -6,6 +6,8 @@ Add next-auth
 
 Style the Header and Footer
 
-Should the auth system use email or username? I'm leaning toward using email since I'd like to learn how to implement it.
+Should the auth system use email or username? I'm leaning toward using email since I'd like to learn how to implement it. Now I'm leaning back toward username.
 
-Make a test account so others can log into it and test the app
+Instead of making a test account so others can log into it and test the app, add the ability to register a new user
+
+Make a database schema and seeds file for the users and data tables
