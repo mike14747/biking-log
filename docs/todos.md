@@ -11,3 +11,5 @@ Should the auth system use email or username? I'm leaning toward using email sin
 Make a test account so others can log into it and test the app
 
 Make all the necessary api routes
+
+Make an api route to add a new user
