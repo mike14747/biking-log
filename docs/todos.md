@@ -1,4 +1,4 @@
-Figure out a data storage solution (mongodb, sanity or some free sql db???). For now I'm going to continue with a local MySQL database in hopes of using mariaDB on AWS.
+Find a SQL server to use with this app... maybe mariaDB on AWS?
 
 Make a favicon and add it to document.js
 
@@ -10,4 +10,4 @@ Should the auth system use email or username? I'm leaning toward using email sin
 
 Instead of making a test account so others can log into it and test the app, add the ability to register a new user
 
-Make a database schema and seeds file for the users and data tables
+Add login and register pages

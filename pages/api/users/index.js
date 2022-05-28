@@ -24,7 +24,6 @@ export default async function users(req, res) {
         try {
             const response = await registerNewUser(req.body.username, req.body.password, req.body.email);
             response ? res.status(201).end() : res.status(500).end();
-            // response?.code ? res.status(response.code).end() : res.status(500).end();
         } catch (error) {
             console.error(error);
             res.status(500).end();
