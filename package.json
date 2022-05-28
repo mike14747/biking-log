@@ -24,6 +24,7 @@
     "homepage": "https://github.com/mike14747/biking-log#readme",
     "dependencies": {
         "next": "^12.1.6",
+        "next-auth": "^4.3.4",
         "react": "^18.1.0",
         "react-dom": "^18.1.0",
         "serverless-mysql": "^1.5.4"
