@@ -740,6 +740,71 @@ template {
     margin-right: auto;
 }
 
+/* start global form css */
+
+.form {
+    max-width: 30ch;
+    margin: 0 auto;
+}
+
+.form > label,
+.form > label > input {
+    display: block;
+}
+
+.form > label {
+    margin: 1rem 0;
+    font-size: 1rem;
+    font-size: var(--step-0);
+}
+
+.form > label > input {
+    padding: 0.5rem;
+    border: 1px var(--mg-gray-6) solid;
+}
+
+.form > label > input:focus {
+    border: 1px var(--theme-color-orange) solid;
+    outline: 0;
+    box-shadow: 0 0 4px 4px var(--theme-color-dirt);
+}
+
+.btn-container {
+    margin: 2rem 0;
+}
+
+.validation-error {
+    font-size: 0.833rem;
+    font-size: var(--step--1);
+    color: var(--theme-color-red);
+    text-align: center;
+}
+
+.warning {
+    font-size: 1rem;
+    font-size: var(--step-0);
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.warning::before {
+    content: '\26D4';
+    padding-right: 0.5rem;
+}
+
+.editor-textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 1rem;
+    display: block;
+    padding: 0.5rem;
+    min-height: 200px;
+}
+
+/* end global form css */
+
 /* add custom css for site-wide use here */
 
 h2.page-heading {
