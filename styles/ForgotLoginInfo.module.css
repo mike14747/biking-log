@@ -15,7 +15,7 @@
 .lower > h3 {
     font-size: 1.2rem;
     font-size: var(--step-1);
-    color: var(--theme-color-orange);
+    color: var(--mg-orange);
 }
 
 .btnContainer {
@@ -24,7 +24,7 @@
 
 .divider {
     display: none;
-    color: var(--theme-color-orange);
+    color: var(--mg-orange);
     font-size: 1.2rem;
     font-size: var(--step-1);
 }

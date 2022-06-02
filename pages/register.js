@@ -22,13 +22,9 @@ export default function Register() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState(null);
 
-    if (typeof window !== 'undefined' && loading) return null;
+    if (loading) return null;
 
-    if (typeof window !== 'undefined' && session) router.push(redirectUrl);
-
-    if (session) {
-        router.push(redirectUrl);
-    }
+    if (session) router.push(redirectUrl);
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();

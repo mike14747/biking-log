@@ -19,13 +19,9 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
 
-    if (typeof window !== 'undefined' && loading) return null;
+    if (loading) return null;
 
-    if (typeof window !== 'undefined' && session) router.push(redirectUrl);
-
-    if (session) {
-        router.push(redirectUrl);
-    }
+    if (session) router.push(redirectUrl);
 
     const handleSignIn = async (e) => {
         e.preventDefault();
