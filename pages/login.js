@@ -19,7 +19,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState(null);
 
-    if (loading) return null;
+    if (loading) return <Loading />;
 
     if (session) router.push(redirectUrl);
 
@@ -44,7 +44,7 @@ const Login = () => {
                 </title>
             </Head>
 
-            {loading && <Loading />}
+            {/* {loading && <Loading />} */}
 
             {!loading && status === 'unauthenticated' &&
                 <>

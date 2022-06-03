@@ -22,12 +22,16 @@ export default function Register() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState(null);
 
-    if (loading) return null;
+    if (loading) return <Loading />;
 
     if (session) router.push(redirectUrl);
 
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
+
+        // console.log('Form is being submitted.');
+
+        setError('You have tried to submit the registration form.');
     };
 
     return (
@@ -37,8 +41,6 @@ export default function Register() {
                     Biking Log - Register
                 </title>
             </Head>
-
-            {loading && <Loading />}
 
             {!loading && status === 'unauthenticated' &&
                 <>
