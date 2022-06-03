@@ -21,6 +21,7 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
     const [error, setError] = useState(null);
+    const [isSuccessful, setIsSuccessful] = useState(false);
 
     if (loading) return <Loading />;
 
@@ -29,9 +30,24 @@ export default function Register() {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        // console.log('Form is being submitted.');
+        const res = await fetch('/api/user/update-username', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8',
+            },
+            body: JSON.stringify({ username, email, password }),
+        });
 
-        setError('You have tried to submit the registration form.');
+        if (res.status !== 201) {
+            res.status === 400 && setError('An error occurred. One or more of the fields are not in the proper format.');
+            res.status === 409 && setError('An error occurred. The username you submitted is already in use.');
+            res.status === 500 && setError('A server error occurred. Please try your update again.');
+        }
+
+        if (res.status === 201) {
+            setIsSuccessful(true);
+            setError(null);
+        }
     };
 
     return (
@@ -54,17 +70,23 @@ export default function Register() {
                         </p>
                     }
 
-                    <form method="post" onSubmit={handleRegisterSubmit} className="form">
-                        <FormInputForUsername username={username} setUsername={setUsername} />
+                    {!isSuccessful &&
+                        <form method="post" onSubmit={handleRegisterSubmit} className="form">
+                            <FormInputForUsername username={username} setUsername={setUsername} />
 
-                        <FormInputForEmail email={email} setEmail={setEmail} />
+                            <FormInputForEmail email={email} setEmail={setEmail} />
 
-                        <FormInputForNewPassword password={password} setPassword={setPassword} repeatPassword={repeatPassword} setRepeatPassword={setRepeatPassword} />
+                            <FormInputForNewPassword password={password} setPassword={setPassword} repeatPassword={repeatPassword} setRepeatPassword={setRepeatPassword} />
 
-                        <div className="btn-container">
-                            <Button type="submit" size="medium" variant="contained">Submit</Button>
-                        </div>
-                    </form>
+                            <div className="btn-container">
+                                <Button type="submit" size="medium" variant="contained">Submit</Button>
+                            </div>
+                        </form>
+                    }
+
+                    {isSuccessful &&
+                        <p className="resister-success">You have successfully registered!</p>
+                    }
                 </>
             }
         </>
