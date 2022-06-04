@@ -30,7 +30,7 @@ export default function Register() {
     const handleRegisterSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/user/update-username', {
+        const res = await fetch('/api/users', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -39,9 +39,9 @@ export default function Register() {
         });
 
         if (res.status !== 201) {
-            res.status === 400 && setError('An error occurred. One or more of the fields are not in the proper format.');
+            res.status === 400 && setError('An error occurred. One or more of the fields are missing or not in the proper format.');
             res.status === 409 && setError('An error occurred. The username you submitted is already in use.');
-            res.status === 500 && setError('A server error occurred. Please try your update again.');
+            res.status === 500 && setError('A server error occurred. Please try your submission again.');
         }
 
         if (res.status === 201) {
@@ -85,7 +85,7 @@ export default function Register() {
                     }
 
                     {isSuccessful &&
-                        <p className="resister-success">You have successfully registered!</p>
+                        <p className="register-success">You have successfully registered!</p>
                     }
                 </>
             }
