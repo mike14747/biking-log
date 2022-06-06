@@ -2,7 +2,6 @@ import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
 import { getUserForSignin } from '../../../lib/api';
-import crypto from 'crypto';
 
 export default NextAuth({
     providers: [
@@ -13,15 +12,8 @@ export default NextAuth({
                 password: { label: 'Password', type: 'password' },
             },
             async authorize(credentials) {
-                const user = await getUserForSignin(credentials.username)?.[0];
-
-                if (user) {
-                    const matches = await crypto.crypto.timingSafeEqual(credentials.password, user.password);
-                    if (matches) return { id: user.id, name: user.username, role: user.role };
-                    return null;
-                } else {
-                    return null;
-                }
+                const user = await getUserForSignin(credentials.username, credentials.password);
+                return user?.length === 1 ? { id: user[0].id, name: user[0].username, role: user[0].role } : null;
             },
         }),
     ],
