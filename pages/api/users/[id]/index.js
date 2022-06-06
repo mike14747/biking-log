@@ -14,10 +14,8 @@ export default async function user(req, res) {
 
         try {
             const response = await getUserProfile(parseInt(req.query.id));
-            console.log({ response });
-            res.json(response);
-            // if (!response) return res.status(500).end();
-            // response?.length === 1 ? res.status(200).json(response) : res.status(400).end();
+            if (!response) return res.status(500).end();
+            response?.length === 1 ? res.status(200).json(response) : res.status(400).end();
         } catch (error) {
             console.error(error);
             res.status(500).end();

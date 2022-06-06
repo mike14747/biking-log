@@ -109,12 +109,8 @@ const Profile = () => {
             setIsLoading(true);
             const fetchData = async () => {
                 const data = await fetch('/api/users/' + session.user.id)
-                    .then(res => {
-                        // console.log({ res });
-                        res.json();
-                    })
+                    .then(res => res.json())
                     .catch(error => console.log(error));
-                console.log({ data });
                 if (data?.length === 1) {
                     setUser(data[0]);
                 } else {
