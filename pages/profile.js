@@ -108,9 +108,13 @@ const Profile = () => {
         if (session) {
             setIsLoading(true);
             const fetchData = async () => {
-                const data = await fetch('/api/user/' + session.user.name)
-                    .then(res => res.json())
+                const data = await fetch('/api/users/' + session.user.id)
+                    .then(res => {
+                        // console.log({ res });
+                        res.json();
+                    })
                     .catch(error => console.log(error));
+                console.log({ data });
                 if (data?.length === 1) {
                     setUser(data[0]);
                 } else {
@@ -125,11 +129,9 @@ const Profile = () => {
         }
     }, [session, emailUpdateMsg]);
 
-    if (typeof window !== 'undefined' && loading) return null;
+    if (loading) return <Loading />;
 
-    if (typeof window !== 'undefined' && !session) router.push('/login?url=/profile');
-
-    // if (!session) router.push('/login?url=/profile');
+    if (!session) router.push('/login?url=/profile');
 
     if (session) {
         return (
