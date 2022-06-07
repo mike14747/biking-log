@@ -34,8 +34,8 @@ const Profile = () => {
     const handleUpdateUsernameSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/user/update-username', {
-            method: 'POST',
+        const res = await fetch('/api/users/' + session.user.id + '/update-username', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
@@ -59,8 +59,8 @@ const Profile = () => {
     const handleUpdateEmailSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/user/update-email', {
-            method: 'POST',
+        const res = await fetch('/api/users/' + session.user.id + '/update-email', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
@@ -83,8 +83,8 @@ const Profile = () => {
     const handleUpdatePasswordSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/user/update-password', {
-            method: 'POST',
+        const res = await fetch('/api/users/' + session.user.id + '/update-password', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
@@ -110,7 +110,7 @@ const Profile = () => {
             const fetchData = async () => {
                 const data = await fetch('/api/users/' + session.user.id)
                     .then(res => res.json())
-                    .catch(error => console.log(error));
+                    .catch(error => console.error(error));
                 if (data?.length === 1) {
                     setUser(data[0]);
                 } else {
@@ -154,13 +154,9 @@ const Profile = () => {
 
                                 <p className={styles.profileItem}><span className={styles.description}>Username: </span>{user?.username}</p>
 
-                                <p className={styles.profileItem}><span className={styles.description}>Password is not visible for security reasons.</span></p>
+                                <p className={styles.profileItem}><span className={styles.description}>Password: </span>not visible for security reasons</p>
 
                                 <p className={styles.profileItem}><span className={styles.description}>Email: </span>{user?.email}</p>
-
-                                <p className={styles.profileItem}><span className={styles.description}>Posts: </span>{user?.posts}</p>
-
-                                <p className={styles.profileItem}><span className={styles.description}>Registered Date: </span>{user?.registeredDate}</p>
                             </div>
 
                             <h3 className={styles.updateHeading}>Update your profile information:</h3>
