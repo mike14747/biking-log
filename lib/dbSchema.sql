@@ -8,10 +8,13 @@ set foreign_key_checks=0;
 
 CREATE TABLE users (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
-    username varchar(20) NOT NULL UNIQUE,
+    username varchar(255) NOT NULL UNIQUE,
     password varchar(255) NOT NULL,
-    email varchar(30) NOT NULL,
-    role varchar(30) NOT NULL,
+    email varchar(255) NOT NULL,
+    role varchar(255) NOT NULL,
+    registered_date date NOT NULL,
+    resetPasswordToken varchar(255) DEFAULT NULL,
+    resetPasswordExpires datetime DEFAULT NULL,
     PRIMARY KEY (id)
 );
 
@@ -23,7 +26,7 @@ CREATE TABLE data (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     date date NOT NULL,
     miles decimal(5,2) NOT NULL,
-    time TIME,
+    time time,
     avg_speed decimal(3,1),
     temp varchar(255),
     wind_speed varchar(255),
