@@ -28,7 +28,7 @@ export default function Token() {
     const handleUpdatePasswordSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/users/update-password', {
+        const res = await fetch('/api/users/' + router.query.userId + '/update-password', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',

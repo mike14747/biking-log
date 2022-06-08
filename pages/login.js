@@ -13,7 +13,8 @@ const Login = () => {
     const loading = status === 'loading';
 
     const router = useRouter();
-    const redirectUrl = router.query.url || '/';
+    let redirectUrl = router.query.url || '/';
+    if (redirectUrl === '/reset-password-success' || redirectUrl === '/login') redirectUrl = '/';
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
