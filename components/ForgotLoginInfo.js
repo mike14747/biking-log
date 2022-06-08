@@ -21,7 +21,7 @@ export default function ForgottenUsername() {
         setIsSubmitting(true);
         setSuccess(false);
 
-        const res = await fetch('/api/user/forgot-username', {
+        const res = await fetch('/api/users/forgot-username', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
@@ -47,7 +47,7 @@ export default function ForgottenUsername() {
         setIsSubmitting(true);
         setSuccess(false);
 
-        const res = await fetch('/api/user/reset-password', {
+        const res = await fetch('/api/users/reset-password', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
