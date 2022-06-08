@@ -85,7 +85,7 @@ export default function Register() {
                     }
 
                     {isSuccessful &&
-                        <p className="register-success">You have successfully registered!</p>
+                        <p className="success-large">You have successfully registered!</p>
                     }
                 </>
             }

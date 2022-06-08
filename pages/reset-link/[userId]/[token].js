@@ -28,12 +28,12 @@ export default function Token() {
     const handleUpdatePasswordSubmit = async (e) => {
         e.preventDefault();
 
-        const res = await fetch('/api/user/update-password', {
-            method: 'POST',
+        const res = await fetch('/api/users/update-password', {
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json;charset=utf-8',
             },
-            body: JSON.stringify({ userId: router.query.userId, token: router.query.token, password }),
+            body: JSON.stringify({ userId: router.query.userId, password, token: router.query.token }),
         });
 
         if (res.status !== 200) {
