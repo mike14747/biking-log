@@ -14,7 +14,8 @@ const Login = () => {
 
     const router = useRouter();
     let redirectUrl = router.query.url || '/';
-    if (redirectUrl === '/reset-password-success' || redirectUrl === '/login') redirectUrl = '/';
+    const notRedirectable = ['/reset-password-success', '/register', '/login'];
+    if (notRedirectable.indexOf(redirectUrl) > -1) redirectUrl = '/';
 
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
