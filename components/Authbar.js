@@ -16,10 +16,19 @@ const Authbar = () => {
             {loading && <>Loading...</>}
 
             {!session && !loading &&
-                <Link href={`/login?url=${router.pathname}`}>
-                    {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                    <a>Login</a>
-                </Link>
+                <>
+                    <Link href={`/login?url=${router.pathname}`}>
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                        <a>Login</a>
+                    </Link>
+
+                    <span>&nbsp;/&nbsp;</span>
+
+                    <Link href={'/register'}>
+                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+                        <a>Register</a>
+                    </Link>
+                </>
             }
 
             {session &&
