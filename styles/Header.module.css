@@ -1,3 +1,21 @@
 .header {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.leftDiv,
+.rightDiv {
     padding: 0.25rem;
+}
+
+.leftDiv img {
+    display: block;
+    width: calc(32px + 15vw);
+    max-width: 128px;
+    height: auto;
+}
+
+.rightDiv {
+    text-align: right;
 }

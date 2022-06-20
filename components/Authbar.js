@@ -12,7 +12,7 @@ const Authbar = () => {
     const router = useRouter();
 
     return (
-        <div className={'container ' + styles.authbarContainer}>
+        <div className={styles.authbarContainer}>
             {loading && <>Loading...</>}
 
             {!session && !loading &&
