@@ -740,7 +740,7 @@ template {
     margin-right: auto;
 }
 
-/* start global form css */
+/* start global <form> css */
 
 .form {
     max-width: 40ch;
@@ -802,7 +802,7 @@ template {
     text-align: center;
 }
 
-/* end global form css */
+/* end global <form> css */
 
 /* add custom css for site-wide use here */
 
