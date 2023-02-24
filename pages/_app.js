@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { SessionProvider } from 'next-auth/react';
 import Layout from '../components/Layout';
 
+import '../styles/mg_base.css';
 import '../styles/globals.css';
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {

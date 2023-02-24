@@ -23,15 +23,18 @@
     },
     "homepage": "https://github.com/mike14747/biking-log#readme",
     "dependencies": {
-        "next": "^12.1.6",
+        "next": "^13.2.0",
         "next-auth": "^4.3.4",
-        "nodemailer": "^6.7.5",
-        "react": "^18.1.0",
-        "react-dom": "^18.1.0",
+        "nodemailer": "^6.9.1",
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
         "serverless-mysql": "^1.5.4"
     },
     "devDependencies": {
-        "eslint": "8.16.0",
-        "eslint-config-next": "12.1.6"
+        "@types/node": "^18.14.1",
+        "@types/react": "^18.0.28",
+        "eslint": "^8.34.0",
+        "eslint-config-next": "^13.2.0",
+        "typescript": "^4.9.5"
     }
 }
