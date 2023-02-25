@@ -1,14 +1,9 @@
 import runQuery from '../db';
 import { mailTransporter } from '../nodemailerConfig';
 import { usernamePattern, emailPattern, passwordPattern } from '../formInputPatterns';
+import { generateRandom, hashPassword } from '../cryptoUtils';
 
-const getInfoForAllUsers = async () => {
-    const queryString = 'SELECT id, username, email, role FROM users ORDER BY id ASC;';
-    const queryParams = [];
-    return await runQuery(queryString, queryParams);
-};
-
-const checkForAvailableUsername = async (username) => {
+export const checkForAvailableUsername = async (username: string) => {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
     const queryParams = [
         username,
@@ -16,46 +11,77 @@ const checkForAvailableUsername = async (username) => {
     return await runQuery(queryString, queryParams);
 };
 
-const registerNewUser = async (username, password, email) => {
-    if (!username || !password || !email) return { code: 400 };
-    const pattern1 = new RegExp(usernamePattern);
-    if (!pattern1.test(username)) return { code: 400 };
-    const pattern2 = new RegExp(passwordPattern);
-    if (!pattern2.test(password)) return { code: 400 };
-    const pattern3 = new RegExp(emailPattern);
-    if (!pattern3.test(email)) return { code: 400 };
+export const getUserForSignin = async (username: string, password: string) => {
 
-    const { pbkdf2Sync } = await import('node:crypto');
-    const hashedPassword = pbkdf2Sync(password, process.env.SALT, 1000, 64, 'sha512').toString('hex');
+    const queryString = 'SELECT id, username, password, salt, role FROM users WHERE username=? && password=? LIMIT 1;';
+    const queryParams = [username, password];
+    const user = await runQuery(queryString, queryParams);
 
-    const today = new Date().toISOString().slice(0, 10);
+    if (user?.length !== 1) return null;
 
-    const queryString = 'INSERT INTO users (username, password, email, role, registered_date) VALUES (?, ?, ?, "user", ?);';
-    const queryParams = [
-        username,
-        hashedPassword,
-        email,
-        today,
-    ];
+    const hashedPassword = hashPassword(password, user?.salt);
+    if (!hashedPassword) return null;
+
+    if (hashedPassword === user.password) {
+        return {
+            id: user[0].id.toString(),
+            username: user[0].username,
+            role: user[0].role,
+        };
+    } else {
+        return null;
+    }
+};
+
+export const getInfoForAllUsers = async () => {
+    const queryString = 'SELECT id, username, email, role FROM users ORDER BY id ASC;';
+    const queryParams = [];
     return await runQuery(queryString, queryParams);
 };
 
-const getUserProfile = async (id) => {
+export const registerNewUser = async (username: string, password: string, email: string) => {
+    const pattern1 = new RegExp(usernamePattern);
+    if (!username || !pattern1.test(username)) return { code: 400 };
+
+    const pattern2 = new RegExp(passwordPattern);
+    if (!password || !pattern2.test(password)) return { code: 400 };
+
+    const pattern3 = new RegExp(emailPattern);
+    if (!email || !pattern3.test(email)) return { code: 400 };
+
+    // first make sure the username isn't already in use
+    const usernameResult = await checkForAvailableUsername(username);
+    if (!usernameResult) return { code: 500 };
+    if (usernameResult.length > 0) return { code: 409 };
+
+    // at this point, the new username must not already be in use, so make the change
+    const salt = generateRandom(32);
+    const hashedPassword = hashPassword(password, salt);
+    if (!hashedPassword) return null;
+
+    const today = new Date().toISOString().slice(0, 10);
+
+    const queryString = 'INSERT INTO users (username, password, salt, email, role, registered_date) VALUES (?, ?, ?, ?, "user", ?);';
+    const queryParams = [
+        username,
+        hashedPassword,
+        salt,
+        email,
+        today,
+    ];
+
+    const result = await runQuery(queryString, queryParams);
+
+    return result?.insertId ? { code: 201 } : { code: 500 };
+};
+
+export const getUserProfile = async (id) => {
     const queryString = 'SELECT id, username, email FROM users WHERE id=? LIMIT 1;';
     const queryParams = [id];
     return await runQuery(queryString, queryParams);
 };
 
-const getUserForSignin = async (username, password) => {
-    const { pbkdf2Sync } = await import('node:crypto');
-    const hashedPassword = pbkdf2Sync(password, process.env.SALT, 1000, 64, 'sha512').toString('hex');
-
-    const queryString = 'SELECT id, username, password, role FROM users WHERE username=? && password=? LIMIT 1;';
-    const queryParams = [username, hashedPassword];
-    return await runQuery(queryString, queryParams);
-};
-
-const updateUserUsername = async (id, username) => {
+export const updateUserUsername = async (id, username) => {
     if (!id || !username) return { code: 400 };
     const pattern = new RegExp(usernamePattern);
     if (!pattern.test(username)) return { code: 400 };
@@ -65,7 +91,7 @@ const updateUserUsername = async (id, username) => {
     return await runQuery(queryString, queryParams);
 };
 
-const updateUserPassword = async (id, password, token = null) => {
+export const updateUserPassword = async (id, password, token = null) => {
     if (!id || !password) return { code: 400 };
     const pattern = new RegExp(passwordPattern);
     if (!pattern.test(password)) return { code: 400 };
@@ -74,22 +100,22 @@ const updateUserPassword = async (id, password, token = null) => {
         // since a token is being passed, get the expiration date/time of the token if it exists in the db
         const queryString = 'SELECT id, resetPasswordExpires FROM users WHERE id=? && resetPasswordToken=?;';
         const queryParams = [id, token];
-        const tokenValidCheck =  await runQuery(queryString, queryParams);
+        const tokenValidCheck = await runQuery(queryString, queryParams);
 
         // make sure token is found and is not expired
         if (tokenValidCheck?.length !== 1) return { code: 406 };
         if (tokenValidCheck[0]?.resetPasswordExpires < new Date(Date.now())) return { code: 412 };
     }
 
-    const { pbkdf2Sync } = await import('node:crypto');
-    const hashedPassword = pbkdf2Sync(password, process.env.SALT, 1000, 64, 'sha512').toString('hex');
+    const salt = generateRandom(32);
+    const hashedPassword = hashPassword(password, salt);
 
-    const queryString = 'UPDATE users SET password=? WHERE id=?;';
-    const queryParams = [hashedPassword, id];
+    const queryString = 'UPDATE users SET (password=?, salt=?) WHERE id=?;';
+    const queryParams = [hashedPassword, salt, id];
     return await runQuery(queryString, queryParams);
 };
 
-const updateUserEmail = async (id, email) => {
+export const updateUserEmail = async (id, email) => {
     if (!id || !email) return { code: 400 };
     const pattern = new RegExp(emailPattern);
     if (!pattern.test(email)) return { code: 400 };
@@ -99,7 +125,7 @@ const updateUserEmail = async (id, email) => {
     return await runQuery(queryString, queryParams);
 };
 
-const forgottenUsername = async (email) => {
+export const forgottenUsername = async (email) => {
     if (!email) return { code: 400 };
 
     const queryString = 'SELECT id, username, email FROM users WHERE email=?;';
@@ -127,7 +153,7 @@ const forgottenUsername = async (email) => {
     }
 };
 
-const resetPassword = async (username, email) => {
+export const resetPassword = async (username, email) => {
     if (!username || !email) return { code: 400 };
 
     const queryString = 'SELECT id, username, email FROM users WHERE username=? && email=? LIMIT 1;';
@@ -170,24 +196,10 @@ const resetPassword = async (username, email) => {
     }
 };
 
-const getRideDataByUser = async (id) => {
+export const getRideDataByUser = async (id) => {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
     const queryParams = [
         id,
     ];
     return await runQuery(queryString, queryParams);
-};
-
-module.exports = {
-    getInfoForAllUsers,
-    checkForAvailableUsername,
-    registerNewUser,
-    getUserProfile,
-    getUserForSignin,
-    updateUserUsername,
-    updateUserPassword,
-    updateUserEmail,
-    forgottenUsername,
-    resetPassword,
-    getRideDataByUser,
 };

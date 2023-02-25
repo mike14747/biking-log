@@ -6,34 +6,39 @@ import { getUserForSignin } from '../../../lib/api';
 export default NextAuth({
     providers: [
         Credentials({
-            name: 'username/password',
+            name: 'Credentials',
             credentials: {
                 username: { label: 'Username', type: 'text' },
                 password: { label: 'Password', type: 'password' },
             },
+
             async authorize(credentials) {
-                const user = await getUserForSignin(credentials.username, credentials.password);
-                return user?.length === 1 ? { id: user[0].id, name: user[0].username, role: user[0].role } : null;
+                if (!credentials) return null;
+
+                const { username, password } = credentials;
+                const user = await getUserForSignin(username, password);
+                return user ? { id: user.id, name: user.username, role: user.role } : null;
             },
         }),
     ],
     session: {
-        jwt: true,
-        maxAge: 30 * 24 * 60 * 60, // 30 * 24 * 60 * 60 is 30 days
+        strategy: 'jwt',
+        maxAge: 90 * (24 * 60 * 60), // (24 * 60 * 60) is 1 day
     },
-    jwt: {
-        signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
+    pages: {
+        signIn: '/login',
     },
-    secret: process.env.JWT_SECRET,
+    secret: process.env.NEXTAUTH_SECRET,
     callbacks: {
         async jwt({ token, user }) {
             if (user?.id) token.id = user.id;
             if (user?.role) token.role = user.role;
             return token;
         },
+
         async session({ session, token }) {
-            if (token?.id) session.user.id = token.id;
-            if (token?.role) session.user.role = token.role;
+            if (token.id && session.user) session.user.id = token.id;
+            if (token.role && session.user) session.user.role = token.role;
             return session;
         },
     },

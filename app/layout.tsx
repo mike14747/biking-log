@@ -17,6 +17,7 @@ type RootLayoutProps = {
 
 export const metadata = {
     title: 'Biking Log',
+    description: 'Log all your bike riding data',
 };
 
 export default async function RootLayout({ children, session }: RootLayoutProps) {
