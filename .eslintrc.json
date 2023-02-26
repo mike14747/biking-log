@@ -46,6 +46,12 @@
                         "ts-check": false,
                         "minimumDescriptionLength": 5
                     }
+                ],
+                "@typescript-eslint/no-unused-vars": [
+                    "warn",
+                    {
+                        "argsIgnorePattern": "^_"
+                    }
                 ]
             }
         }
