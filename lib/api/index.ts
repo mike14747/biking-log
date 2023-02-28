@@ -13,16 +13,16 @@ export const checkForAvailableUsername = async (username: string) => {
 
 export const getUserForSignin = async (username: string, password: string) => {
 
-    const queryString = 'SELECT id, username, password, salt, role FROM users WHERE username=? && password=? LIMIT 1;';
+    const queryString = 'SELECT id, username, password, salt, role FROM users WHERE username=? LIMIT 1;';
     const queryParams = [username, password];
     const user = await runQuery(queryString, queryParams);
 
     if (user?.length !== 1) return null;
 
-    const hashedPassword = hashPassword(password, user?.salt);
+    const hashedPassword = hashPassword(password, user[0]?.salt);
     if (!hashedPassword) return null;
 
-    if (hashedPassword === user.password) {
+    if (hashedPassword === user[0].password) {
         return {
             id: user[0].id.toString(),
             username: user[0].username,
@@ -75,13 +75,13 @@ export const registerNewUser = async (username: string, password: string, email:
     return result?.insertId ? { code: 201 } : { code: 500 };
 };
 
-export const getUserProfile = async (id) => {
+export const getUserProfile = async (id: number) => {
     const queryString = 'SELECT id, username, email FROM users WHERE id=? LIMIT 1;';
     const queryParams = [id];
     return await runQuery(queryString, queryParams);
 };
 
-export const updateUserUsername = async (id, username) => {
+export const updateUserUsername = async (id: number, username: string) => {
     if (!id || !username) return { code: 400 };
     const pattern = new RegExp(usernamePattern);
     if (!pattern.test(username)) return { code: 400 };
@@ -91,7 +91,7 @@ export const updateUserUsername = async (id, username) => {
     return await runQuery(queryString, queryParams);
 };
 
-export const updateUserPassword = async (id, password, token = null) => {
+export const updateUserPassword = async (id: number, password: string, token = null) => {
     if (!id || !password) return { code: 400 };
     const pattern = new RegExp(passwordPattern);
     if (!pattern.test(password)) return { code: 400 };
@@ -115,7 +115,7 @@ export const updateUserPassword = async (id, password, token = null) => {
     return await runQuery(queryString, queryParams);
 };
 
-export const updateUserEmail = async (id, email) => {
+export const updateUserEmail = async (id: number, email: string) => {
     if (!id || !email) return { code: 400 };
     const pattern = new RegExp(emailPattern);
     if (!pattern.test(email)) return { code: 400 };
@@ -125,7 +125,7 @@ export const updateUserEmail = async (id, email) => {
     return await runQuery(queryString, queryParams);
 };
 
-export const forgottenUsername = async (email) => {
+export const forgottenUsername = async (email: string) => {
     if (!email) return { code: 400 };
 
     const queryString = 'SELECT id, username, email FROM users WHERE email=?;';
@@ -153,7 +153,7 @@ export const forgottenUsername = async (email) => {
     }
 };
 
-export const resetPassword = async (username, email) => {
+export const resetPassword = async (username: string, email: string) => {
     if (!username || !email) return { code: 400 };
 
     const queryString = 'SELECT id, username, email FROM users WHERE username=? && email=? LIMIT 1;';
@@ -196,7 +196,7 @@ export const resetPassword = async (username, email) => {
     }
 };
 
-export const getRideDataByUser = async (id) => {
+export const getRideDataByUser = async (id: number) => {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
     const queryParams = [
         id,
