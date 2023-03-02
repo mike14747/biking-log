@@ -9,7 +9,9 @@ export const metadata = {
 };
 
 async function getData(id: number) {
-    return await getUserProfile(id).catch(error => console.log(error.message));
+    const data = await getUserProfile(id).catch(error => console.log(error.message));
+    if (!data) return null;
+    return JSON.parse(JSON.stringify(data));
 }
 
 export default async function Profile() {
@@ -21,9 +23,7 @@ export default async function Profile() {
         redirect('/login?callbackUrl=/profile');
     }
 
-    const userArr = await getData(parseInt(session.id)).catch(error => console.log(error.message));
-    const user = userArr[0];
-    console.log({ user });
+    const user = await getData(parseInt(session.id)).catch(error => console.log(error.message));
     if (user?.username && user?.email) user.id = session.id;
 
     return (
@@ -35,14 +35,9 @@ export default async function Profile() {
                         Profile
                     </h2>
 
-                    {user &&
-                        <CurrentProfile userObj={user} />
-                    }
-
-                    {!user &&
-                        <p className="error">
-                            An error occurred fetching user profile info.
-                        </p>
+                    {user?.length === 1
+                        ? <CurrentProfile userObj={user[0]} />
+                        : <p className="error">An error occurred fetching user profile info.</p>
                     }
                 </>
             </article>
