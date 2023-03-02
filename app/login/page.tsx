@@ -8,10 +8,6 @@ import Button from '../components/Button';
 import ForgotLoginInfo from '../components/login/ForgotLoginInfo';
 import Loading from '../components/Loading';
 
-export const metadata = {
-    title: 'Biking Log - Login',
-};
-
 export default function Login() {
     const { status } = useSession();
 

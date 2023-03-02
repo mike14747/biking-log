@@ -8,10 +8,6 @@ import FormInputForEmail from '../components/FormInputForEmail';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
 
-export const metadata = {
-    title: 'Biking Log - Register',
-};
-
 export default function Register() {
     const { status } = useSession();
 
