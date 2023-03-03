@@ -29,8 +29,8 @@ export type UserObjProp = {
 }
 
 export type ViewButtonState = {
-    showUpdateUsername: boolean;
-    showUpdatePassword: boolean;
-    showUpdateEmail: boolean;
+    showChangeUsername: boolean;
+    showChangePassword: boolean;
+    showChangeEmail: boolean;
     showDeleteAccount: boolean;
 }

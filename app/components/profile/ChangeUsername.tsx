@@ -6,12 +6,12 @@ import FormInputForUsername from '../FormInputForUsername';
 
 import styles from '../../../styles/profile.module.css';
 
-export default function UpdateUsername({ id }: {id: string}) {
+export default function ChangeUsername({ id }: { id: string }) {
     const username = useRef<string>('');
     const [error, setError] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
 
-    const handleUpdateUsernameSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    const handleChangeUsernameSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         setIsSubmitting(true);
@@ -40,6 +40,9 @@ export default function UpdateUsername({ id }: {id: string}) {
             case 401:
                 setError('An error occurred. You do not have permission to make this update.');
                 break;
+            case 404:
+                setError('An error occurred. User was not found.');
+                break;
             case 409:
                 setError('An error occurred. The username you submitted is already in use.');
                 break;
@@ -53,13 +56,13 @@ export default function UpdateUsername({ id }: {id: string}) {
 
     return (
         <>
-            <h3 className={styles.updateHeading}>Update your username:</h3>
+            <h3 className={styles.updateHeading}>Change your username:</h3>
 
             <p className={styles.note}>
                 <strong>Note:</strong> changing your username will log you out.
             </p>
 
-            <form className={styles.updateGroup} onSubmit={handleUpdateUsernameSubmit}>
+            <form className={styles.updateGroup} onSubmit={handleChangeUsernameSubmit}>
                 {isSubmitting && <Loading />}
 
                 {error && <p className={styles.error}>{error}</p>}

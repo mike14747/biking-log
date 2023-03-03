@@ -110,7 +110,9 @@ export const updateUserPassword = async (id: number, password: string, token = n
     const salt = generateRandom(32);
     const hashedPassword = hashPassword(password, salt);
 
-    const queryString = 'UPDATE users SET (password=?, salt=?) WHERE id=?;';
+    console.log({ salt, hashedPassword, id });
+
+    const queryString = 'UPDATE users SET password=?, salt=? WHERE id=?;';
     const queryParams = [hashedPassword, salt, id];
     return await runQuery(queryString, queryParams);
 };
@@ -159,7 +161,6 @@ export const resetPassword = async (username: string, email: string) => {
     const queryString = 'SELECT id, username, email FROM users WHERE username=? && email=? LIMIT 1;';
     const queryParams = [username, email];
     const user = await runQuery(queryString, queryParams);
-    console.log({ user });
 
     if (user?.length === 1) {
         const id = user[0].id;

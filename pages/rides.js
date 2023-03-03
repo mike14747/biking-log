@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { useSession } from 'next-auth/react';
-import Head from 'next/head';
 import Loading from '../components/Loading';
 
 import styles from '../styles/Rides.module.css';
@@ -43,13 +42,7 @@ export default function Rides() {
 
     if (session) {
         return (
-            <>
-                <Head>
-                    <title>
-                        Biking Log - Rides
-                    </title>
-                </Head>
-
+            <main id="main">
                 <article className="mw-75ch">
                     <h2 className="page-heading">
                         My Rides
@@ -61,7 +54,7 @@ export default function Rides() {
 
                     <p>This is the rides page!</p>
                 </article>
-            </>
+            </main>
         );
     }
 }
