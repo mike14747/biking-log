@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState, Dispatch, SetStateAction, FormEvent, RefObject } from 'react';
 import Button from '../Button';
 import Loading from '../Loading';
@@ -61,8 +63,10 @@ export default function ChangeEmail({ id, setUser }: { id: string, setUser: Disp
     };
 
     return (
-        <>
-            <h3 className={styles.updateHeading}>Change your email:</h3>
+        <div className={styles.updateContainer}>
+            <div className={styles.updateHeading}>
+                <h3>Change your email:</h3>
+            </div>
 
             {isEmailUpdated && <p className={styles.success}>Your email address has been successfully updated.</p>}
 
@@ -75,6 +79,6 @@ export default function ChangeEmail({ id, setUser }: { id: string, setUser: Disp
 
                 <Button type="submit" size="medium" variant="contained" theme="primary">Apply</Button>
             </form>
-        </>
+        </div>
     );
 }

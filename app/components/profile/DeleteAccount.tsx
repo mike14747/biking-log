@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import Button from '../Button';
@@ -5,7 +7,7 @@ import Loading from '../Loading';
 
 import styles from '../../../styles/profile.module.css';
 
-export default function DeleteAccount({ id }: {id: string}) {
+export default function DeleteAccount({ id }: { id: string }) {
     const [error, setError] = useState<string>('');
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [deleteCounter, setDeleteCounter] = useState<number>(0);
@@ -39,6 +41,9 @@ export default function DeleteAccount({ id }: {id: string}) {
                 case 401:
                     setError('An error occurred. You do not have permission to delete this account.');
                     break;
+                case 404:
+                    setError('An error occurred. User was not found.');
+                    break;
                 case 500:
                     setError('A server error occurred. Please try again.');
                     break;
@@ -49,8 +54,10 @@ export default function DeleteAccount({ id }: {id: string}) {
     };
 
     return (
-        <>
-            <h3 className={styles.deleteHeading}>Delete your account</h3>
+        <div className={styles.deleteContainer}>
+            <div className={styles.deleteHeading}>
+                <h3>Delete your account</h3>
+            </div>
 
             {isSubmitting && <Loading />}
 
@@ -63,6 +70,6 @@ export default function DeleteAccount({ id }: {id: string}) {
             }
 
             <Button type="button" size={deleteCounter > 0 ? 'medium' : 'small'} variant="contained" theme="danger" onClick={handleDeleteAccount}>Delete Account</Button>
-        </>
+        </div>
     );
 }

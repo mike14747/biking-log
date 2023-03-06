@@ -1,3 +1,5 @@
+'use client';
+
 import { useRef, useState, FormEvent } from 'react';
 import { signOut } from 'next-auth/react';
 import Button from '../Button';
@@ -55,12 +57,14 @@ export default function ChangeUsername({ id }: { id: string }) {
     };
 
     return (
-        <>
-            <h3 className={styles.updateHeading}>Change your username:</h3>
+        <div className={styles.updateContainer}>
+            <div className={styles.updateHeading}>
+                <h3>Change your username:</h3>
 
-            <p className={styles.note}>
-                <strong>Note:</strong> changing your username will log you out.
-            </p>
+                <p className={styles.note}>
+                    <strong>Note:</strong> changing your username will log you out.
+                </p>
+            </div>
 
             <form className={styles.updateGroup} onSubmit={handleChangeUsernameSubmit}>
                 {isSubmitting && <Loading />}
@@ -71,6 +75,6 @@ export default function ChangeUsername({ id }: { id: string }) {
 
                 <Button type="submit" size="medium" variant="contained" theme="primary">Apply</Button>
             </form>
-        </>
+        </div>
     );
 }
