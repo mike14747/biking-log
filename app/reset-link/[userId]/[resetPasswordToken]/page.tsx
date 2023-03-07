@@ -1,5 +1,6 @@
 'use client';
 
+import type { Metadata } from 'next';
 import { useRef, useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -17,7 +18,7 @@ type PageProps = {
     }
 }
 
-export const metadata = {
+export const metadata: Metadata = {
     title: 'Biking Log - Reset Password',
 };
 

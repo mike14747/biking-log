@@ -1,4 +1,7 @@
 import { ReactNode } from 'react';
+import type { Metadata } from 'next';
+// eslint-disable-next-line camelcase
+import { Open_Sans } from 'next/font/google';
 import ClientSessionProvider from './components/ClientSessionProvider';
 import Header from './components/Header';
 // import Navbar from './components/Navbar';
@@ -15,14 +18,19 @@ type RootLayoutProps = {
     session: Session;
 };
 
-export const metadata = {
+const openSans = Open_Sans({
+    variable: '--font-openSans',
+    subsets: ['latin'],
+});
+
+export const metadata: Metadata = {
     title: 'Biking Log',
     description: 'Log all your bike riding data',
 };
 
 export default async function RootLayout({ children, session }: RootLayoutProps) {
     return (
-        <html lang="en">
+        <html lang="en" className={openSans.variable}>
             <head>
                 <meta content="width=device-width, initial-scale=1" name="viewport" />
                 {/* <link rel="icon" href="data:," /> */}
