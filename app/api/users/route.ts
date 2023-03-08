@@ -17,10 +17,10 @@ export async function GET() {
 // register a new user
 export async function POST(request: NextRequest) {
     try {
-        const body = await request.json();
-        if (!body.username || !body.password || !body.email) return NextResponse.json(null, { status: 400 });
+        const { username, password, email } = await request.json();
+        if (username || password || email) return NextResponse.json(null, { status: 400 });
 
-        const result = await registerNewUser(body.username, body.password, body.email);
+        const result = await registerNewUser(username, password, email);
         return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
         console.log('error:', error.message);
