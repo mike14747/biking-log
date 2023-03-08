@@ -7,10 +7,10 @@ export async function GET() {
         // check for a session here and make sure the user is logged in and has a role of admin
         // ...once next-auth supports in it the appDir
         const data = await getInfoForAllUsers();
-        return data ? NextResponse.json(data) : new Response(null, { status: 500 });
+        return data ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        console.log(error);
-        return new Response(null, { status: 500 });
+        console.log('error:', error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
 
@@ -18,12 +18,12 @@ export async function GET() {
 export async function POST(request: NextRequest) {
     try {
         const body = await request.json();
-        if (!body.username || !body.password || !body.email) return new Response(null, { status: 400 });
+        if (!body.username || !body.password || !body.email) return NextResponse.json(null, { status: 400 });
 
         const result = await registerNewUser(body.username, body.password, body.email);
-        return result?.code ? new Response(null, { status: result.code }) : new Response(null, { status: 500 });
+        return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        console.log(error);
-        return new Response(null, { status: 500 });
+        console.log('error:', error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }

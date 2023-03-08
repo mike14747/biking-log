@@ -151,7 +151,7 @@ export const forgottenUsername = async (email: string) => {
         }
     } else {
         // email address doesn't match any in the database
-        return { code: 400 };
+        return { code: 404 };
     }
 };
 
@@ -193,7 +193,7 @@ export const resetPassword = async (username: string, email: string) => {
         }
     } else {
         // username and email address doesn't match any user in the database
-        return { code: 400 };
+        return { code: 404 };
     }
 };
 
