@@ -16,7 +16,7 @@ export async function PUT(req: NextRequest, { params }) {
 
         const response = await updateUserEmail(id, email);
         if (!response) return NextResponse.json(null, { status: 500 });
-        return response?.changedRows === 1 ? NextResponse.json(null, { status: 200 }) : NextResponse.json(null, { status: 404 });
+        return response.affectedRows === 1 ? NextResponse.json(null, { status: 200 }) : NextResponse.json(null, { status: 404 });
     } catch (error) {
         console.log('error:', error.message);
         return NextResponse.json({ error: error.message }, { status: 500 });
