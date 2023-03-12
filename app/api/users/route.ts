@@ -2,14 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getInfoForAllUsers, registerNewUser } from '../../../lib/api';
 import { getToken } from 'next-auth/jwt';
 
-// get info for all users
+// get info for all users, but only if the user is logged in and has a role of admin
 export async function GET(req: NextRequest) {
     try {
         const token = await getToken({ req });
         if (!token) return NextResponse.json({ error: 'You need to be logged in to access this route.' }, { status: 401 });
-        console.log({ token });
-        // check for a session here and make sure the user is logged in and has a role of admin
-        // ...once next-auth supports in it the appDir
+
         const data = await getInfoForAllUsers();
         return data ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
