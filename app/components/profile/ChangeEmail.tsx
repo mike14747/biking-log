@@ -54,6 +54,9 @@ export default function ChangeEmail({ id, setUser }: { id: string, setUser: Disp
             case 404:
                 setError('An error occurred. User was not found.');
                 break;
+            case 406:
+                setError('An error occurred. Cannot change your email to the same one already in the system.');
+                break;
             case 500:
                 setError('A server error occurred. Please try your update again.');
                 break;

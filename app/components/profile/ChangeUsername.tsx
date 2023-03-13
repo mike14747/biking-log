@@ -45,6 +45,9 @@ export default function ChangeUsername({ id }: { id: string }) {
             case 404:
                 setError('An error occurred. User was not found.');
                 break;
+            case 406:
+                setError('An error occurred. Cannot change your username to the same one already in the system.');
+                break;
             case 409:
                 setError('An error occurred. The username you submitted is already in use.');
                 break;

@@ -81,17 +81,22 @@ export const getUserProfile = async (id: number) => {
     return await runQuery(queryString, queryParams);
 };
 
-export const updateUserUsername = async (id: number, username: string) => {
+export const changeUsername = async (id: number, username: string) => {
     if (!id || !username) return { code: 400 };
     const pattern = new RegExp(usernamePattern);
     if (!pattern.test(username)) return { code: 400 };
 
     const queryString = 'UPDATE users SET username=? WHERE id=?;';
     const queryParams = [username, id];
-    return await runQuery(queryString, queryParams);
+    const result = await runQuery(queryString, queryParams);
+
+    if (result.affectedRows === 0) return { code: 404 };
+    if (result.changedRows === 1) return { code: 200 };
+    if (result.affectedRows === 1 && result.changedRows === 0) return { code: 406 };
+    return { code: 500 };
 };
 
-export const updateUserPassword = async (id: number, password: string, token = null) => {
+export const changePassword = async (id: number, password: string, token = null) => {
     if (!id || !password) return { code: 400 };
     const pattern = new RegExp(passwordPattern);
     if (!pattern.test(password)) return { code: 400 };
@@ -110,21 +115,30 @@ export const updateUserPassword = async (id: number, password: string, token = n
     const salt = generateRandom(32);
     const hashedPassword = hashPassword(password, salt);
 
-    console.log({ salt, hashedPassword, id });
+    // console.log({ salt, hashedPassword, id });
 
     const queryString = 'UPDATE users SET password=?, salt=? WHERE id=?;';
     const queryParams = [hashedPassword, salt, id];
-    return await runQuery(queryString, queryParams);
+    const result = await runQuery(queryString, queryParams);
+
+    if (result.affectedRows === 0) return { code: 404 };
+    if (result.changedRows === 1) return { code: 200 };
+    return { code: 500 };
 };
 
-export const updateUserEmail = async (id: number, email: string) => {
+export const changeEmail = async (id: number, email: string) => {
     if (!id || !email) return { code: 400 };
     const pattern = new RegExp(emailPattern);
     if (!pattern.test(email)) return { code: 400 };
 
     const queryString = 'UPDATE users SET email=? WHERE id=?;';
     const queryParams = [email, id];
-    return await runQuery(queryString, queryParams);
+    const result = await runQuery(queryString, queryParams);
+
+    if (result.affectedRows === 0) return { code: 404 };
+    if (result.changedRows === 1) return { code: 200 };
+    if (result.affectedRows === 1 && result.changedRows === 0) return { code: 406 };
+    return { code: 500 };
 };
 
 export const forgottenUsername = async (email: string) => {
