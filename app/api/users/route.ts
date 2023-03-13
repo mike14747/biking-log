@@ -6,7 +6,7 @@ import { getToken } from 'next-auth/jwt';
 export async function GET(req: NextRequest) {
     try {
         const token = await getToken({ req });
-        if (!token) return NextResponse.json({ error: 'You need to be logged in to access this route.' }, { status: 401 });
+        if (token?.role !== 'admin') return NextResponse.json(null, { status: 401 });
 
         const data = await getInfoForAllUsers();
         return data ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 500 });
