@@ -1,22 +1,22 @@
 // this route will get all user info for a single user (but not riding data) by id if the http method is GET
 
+import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { getUserProfile } from '../../../../lib/api';
 
-export default async function user(req, res) {
-    if (req.method !== 'GET') return res.status(401).end();
-    if (!req.query.id) return res.status(400).end();
-
+export async function GET(req: NextRequest, { params }) {
     try {
         const token = await getToken({ req });
-        if (!token) return res.status(401).end();
-        if (token.id !== req.query.id) return res.status(400).end();
+        if (!token) return NextResponse.json({ error: 'You need to be logged in to access this route.' }, { status: 401 });
 
-        const response = await getUserProfile(parseInt(req.query.id));
-        if (!response) return res.status(500).end();
-        response?.length === 1 ? res.status(200).json(response) : res.status(404).end();
+        const id = params.id;
+        if (token.id !== id) return NextResponse.json(null, { status: 400 });
+
+        const data = await getUserProfile(parseInt(id));
+        if (!data) return NextResponse.json(null, { status: 500 });
+        return data.length === 1 ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 404 });
     } catch (error) {
-        console.error(error);
-        res.status(500).end();
+        console.log('error:', error.message);
+        return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
