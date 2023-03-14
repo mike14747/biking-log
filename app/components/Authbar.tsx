@@ -6,7 +6,7 @@ import Button from '../components/Button';
 
 import styles from '../../styles/Authbar.module.css';
 
-const Authbar = () => {
+export default function Authbar() {
     const { data: session, status } = useSession();
     const loading = status === 'loading';
 
@@ -42,6 +42,4 @@ const Authbar = () => {
             }
         </section>
     );
-};
-
-export default Authbar;
+}

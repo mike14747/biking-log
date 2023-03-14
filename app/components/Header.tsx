@@ -8,6 +8,7 @@ export default function Header() {
         <header className={'container ' + styles.header}>
             <div className={styles.leftDiv}>
                 <Link href="/">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src="/images/bicycle.png" alt="biking-log" />
                 </Link>
 
