@@ -141,6 +141,18 @@ export const changeEmail = async (id: number, email: string) => {
     return { code: 500 };
 };
 
+export async function deleteAccount(id: number) {
+    if (!id) return { code: 400 };
+
+    const queryString = 'DELETE from users WHERE id=?;';
+    const queryParams = [id];
+    const result = await runQuery(queryString, queryParams);
+
+    if (result.affectedRows === 0) return { code: 404 };
+    if (result.affectedRows === 1) return { code: 200 };
+    return { code: 500 };
+}
+
 export const forgottenUsername = async (email: string) => {
     if (!email) return { code: 400 };
 
