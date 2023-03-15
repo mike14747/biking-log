@@ -8,6 +8,12 @@ import FormInputForEmail from '../components/FormInputForEmail';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
 
+const statusCodeErrorMessages = {
+    400: 'An error occurred. One or more of the fields are missing or not in the proper format.',
+    409: 'An error occurred. The username you submitted is already in use.',
+    500: 'A server error occurred. Please try your update again.',
+};
+
 export default function Register() {
     const { status } = useSession();
 
@@ -33,25 +39,16 @@ export default function Register() {
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify({ username: username.current, email: email.current, password: password.current }),
-        }).catch(error => {
-            console.error(error.name + ': ' + error.message);
-            setError('An error occurred sending the data.');
-        });
+        }).catch(error => console.error(error.name + ': ' + error.message));
 
-        if (res) {
-            if (res.status === 201) {
-                setIsSuccessful(true);
-                setError('');
-            }
-
-            if (res.status !== 201) {
-                setIsSuccessful(false);
-
-                res.status === 400 && setError('An error occurred. One or more of the fields are missing or not in the proper format.');
-                res.status === 409 && setError('An error occurred. The username you submitted is already in use.');
-                res.status === 500 && setError('A server error occurred. Please try your submission again.');
-            }
+        if (res?.status === 201) {
+            setIsSuccessful(true);
+            setError('');
         }
+
+        if (res && res.status !== 201) setError(statusCodeErrorMessages[res.status] || 'An unknown error occurred');
+
+        if (!res) setError(statusCodeErrorMessages[500]);
     };
 
     return (

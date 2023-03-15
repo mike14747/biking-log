@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
 export async function POST(request: NextRequest) {
     try {
         const { username, password, email } = await request.json();
-        if (username || password || email) return NextResponse.json(null, { status: 400 });
+        if (!username || !password || !email) return NextResponse.json(null, { status: 400 });
 
         const result = await registerNewUser(username, password, email);
         return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });

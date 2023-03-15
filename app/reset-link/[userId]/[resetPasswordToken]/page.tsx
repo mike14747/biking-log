@@ -22,6 +22,14 @@ export const metadata: Metadata = {
     title: 'Biking Log - Reset Password',
 };
 
+const statusCodeErrorMessages = {
+    400: 'An error occurred. New password is not in the proper format.',
+    401: 'An error occurred. You do not have permission to make this update.',
+    406: 'An error occurred. User or reset password token do not exist.',
+    412: 'An error occurred. The reset password token has expired.',
+    500: 'A server error occurred. Please try your update again.',
+};
+
 export default function ResetLink({ params }: PageProps) {
     const { data: session } = useSession();
 
@@ -30,7 +38,7 @@ export default function ResetLink({ params }: PageProps) {
     const password = useRef<string>('');
     const repeatPassword = useRef<string>('');
 
-    const [passwordError, setPasswordError] = useState<string>('');
+    const [error, setError] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isSuccessfullyUpdated, setIsSuccessfullyUpdated] = useState<boolean>(false);
 
@@ -47,7 +55,7 @@ export default function ResetLink({ params }: PageProps) {
         setIsLoading(true);
 
         if (password.current !== repeatPassword.current) {
-            setPasswordError('Passwords do not match.');
+            setError('Passwords do not match.');
             return;
         }
 
@@ -57,23 +65,20 @@ export default function ResetLink({ params }: PageProps) {
                 'Content-Type': 'application/json;charset=utf-8',
             },
             body: JSON.stringify({ userId: params.userId, resetPasswordToken: params.resetPasswordToken, password: password.current }),
-        });
+        }).catch(error => console.error(error.name + ': ' + error.message));
 
-        if (res.status !== 200) {
-            setIsLoading(false);
-            res.status === 400 && setPasswordError('An error occurred. New password is not in the proper format.');
-            res.status === 401 && setPasswordError('An error occurred. You do not have permission to make this update.');
-            res.status === 406 && setPasswordError('An error occurred. User or reset password token do not exist.');
-            res.status === 412 && setPasswordError('An error occurred. The reset password token has expired.');
-            res.status === 500 && setPasswordError('A server error occurred. Please try your update again.');
-        }
-
-        if (res.status === 200) {
+        if (res?.status === 200) {
             password.current = '';
             repeatPassword.current = '';
-            setPasswordError('');
+            setError('');
             setIsSuccessfullyUpdated(true);
+        } else {
+            setIsLoading(false);
         }
+
+        if (res && res?.status !== 200) setError(statusCodeErrorMessages[res.status] || 'An unknown error occurred');
+
+        if (!res) setError(statusCodeErrorMessages[500]);
     };
 
     return (
@@ -101,7 +106,7 @@ export default function ResetLink({ params }: PageProps) {
                         </p>
 
                         <form className={styles.updateGroup} onSubmit={handleUpdatePasswordSubmit}>
-                            {passwordError && <p className={styles.error}>{passwordError}</p>}
+                            {error && <p className={styles.error}>{error}</p>}
 
                             <FormInputForNewPassword password={password} repeatPassword={repeatPassword} />
 

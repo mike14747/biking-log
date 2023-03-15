@@ -8,6 +8,14 @@ import { UserInfo } from '../../../types';
 
 import styles from '../../../styles/profile.module.css';
 
+const statusCodeErrorMessages = {
+    400: 'An error occurred. New email is not in the proper format.',
+    401: 'An error occurred. You do not have permission to make this update.',
+    404: 'An error occurred. User was not found.',
+    406: 'An error occurred. Cannot change your email to the same one already in the system.',
+    500: 'A server error occurred. Please try your update again.',
+};
+
 export default function ChangeEmail({ id, setUser }: { id: string, setUser: Dispatch<SetStateAction<UserInfo>> }) {
     const email = useRef<string>('');
     const [error, setError] = useState<string>('');
@@ -31,38 +39,20 @@ export default function ChangeEmail({ id, setUser }: { id: string, setUser: Disp
 
         setIsSubmitting(false);
 
-        switch (res?.status) {
-            case undefined:
-                setError('An error occurred. Please try your update again.');
-                break;
-            case 200:
-                setUser(prev => ({
-                    ...prev,
-                    email: email.current,
-                }));
+        if (res?.status === 200) {
+            setUser(prev => ({
+                ...prev,
+                email: email.current,
+            }));
 
-                setError('');
-                setIsEmailUpdated(true);
-                if (emailForm.current) emailForm.current.reset();
-                break;
-            case 400:
-                setError('An error occurred. New email is not in the proper format.');
-                break;
-            case 401:
-                setError('An error occurred. You do not have permission to make this update.');
-                break;
-            case 404:
-                setError('An error occurred. User was not found.');
-                break;
-            case 406:
-                setError('An error occurred. Cannot change your email to the same one already in the system.');
-                break;
-            case 500:
-                setError('A server error occurred. Please try your update again.');
-                break;
-            default:
-                setError('An unknown error occurred. Please try your update again.');
+            setError('');
+            setIsEmailUpdated(true);
+            if (emailForm.current) emailForm.current.reset();
         }
+
+        if (res && res.status !== 200) setError(statusCodeErrorMessages[res.status] || 'An unknown error occurred');
+
+        if (!res) setError(statusCodeErrorMessages[500]);
     };
 
     return (

@@ -1,12 +1,21 @@
 'use client';
 
 import { useRef, useState, FormEvent } from 'react';
-import { signOut } from 'next-auth/react';
 import Button from '../Button';
 import Loading from '../Loading';
 import FormInputForUsername from '../FormInputForUsername';
+import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
 
 import styles from '../../../styles/profile.module.css';
+
+const statusCodeErrorMessages = {
+    400: 'An error occurred. New username is not in the proper format.',
+    401: 'An error occurred. You do not have permission to make this update.',
+    404: 'An error occurred. User was not found.',
+    406: 'An error occurred. Cannot change your username to the same one already in the system.',
+    409: 'An error occurred. The username you submitted is already in use.',
+    500: 'A server error occurred. Please try your update again.',
+};
 
 export default function ChangeUsername({ id }: { id: string }) {
     const username = useRef<string>('');
@@ -26,37 +35,7 @@ export default function ChangeUsername({ id }: { id: string }) {
             body: JSON.stringify({ username: username.current }),
         }).catch(error => console.error(error.name + ': ' + error.message));
 
-        if (!res || res.status !== 200) setIsSubmitting(false);
-
-        switch (res?.status) {
-            case undefined:
-                setError('An error occurred. Please try your update again.');
-                break;
-            case 200:
-                setError('');
-                signOut({ callbackUrl: '/' });
-                break;
-            case 400:
-                setError('An error occurred. New username is not in the proper format.');
-                break;
-            case 401:
-                setError('An error occurred. You do not have permission to make this update.');
-                break;
-            case 404:
-                setError('An error occurred. User was not found.');
-                break;
-            case 406:
-                setError('An error occurred. Cannot change your username to the same one already in the system.');
-                break;
-            case 409:
-                setError('An error occurred. The username you submitted is already in use.');
-                break;
-            case 500:
-                setError('A server error occurred. Please try your update again.');
-                break;
-            default:
-                setError('An unknown error occurred. Please try your update again.');
-        }
+        processStatusCodeWithSignout(res, statusCodeErrorMessages, setError, setIsSubmitting);
     };
 
     return (

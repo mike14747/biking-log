@@ -1,11 +1,18 @@
 'use client';
 
 import { useState } from 'react';
-import { signOut } from 'next-auth/react';
 import Button from '../Button';
 import Loading from '../Loading';
+import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
 
 import styles from '../../../styles/profile.module.css';
+
+const statusCodeErrorMessages = {
+    400: 'An error occurred. A bad request was made.',
+    401: 'An error occurred. You do not have permission to delete this account.',
+    404: 'An error occurred. User was not found.',
+    500: 'A server error occurred. Please try your update again.',
+};
 
 export default function DeleteAccount({ id }: { id: string }) {
     const [error, setError] = useState<string>('');
@@ -25,31 +32,7 @@ export default function DeleteAccount({ id }: { id: string }) {
                 method: 'DELETE',
             }).catch(error => console.error(error.name + ': ' + error.message));
 
-            if (!res || res.status !== 200) setIsSubmitting(false);
-
-            switch (res?.status) {
-                case undefined:
-                    setError('An error occurred. Please try again.');
-                    break;
-                case 200:
-                    setError('');
-                    signOut({ callbackUrl: '/' });
-                    break;
-                case 400:
-                    setError('An error occurred. A bad request was made.');
-                    break;
-                case 401:
-                    setError('An error occurred. You do not have permission to delete this account.');
-                    break;
-                case 404:
-                    setError('An error occurred. User was not found.');
-                    break;
-                case 500:
-                    setError('A server error occurred. Please try again.');
-                    break;
-                default:
-                    setError('An unknown error occurred. Please try again.');
-            }
+            processStatusCodeWithSignout(res, statusCodeErrorMessages, setError, setIsSubmitting);
         }
     };
 

@@ -1,12 +1,19 @@
 'use client';
 
 import { useRef, useState, FormEvent } from 'react';
-import { signOut } from 'next-auth/react';
 import Button from '../Button';
 import Loading from '../Loading';
 import FormInputForNewPassword from '../FormInputForNewPassword';
+import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
 
 import styles from '../../../styles/profile.module.css';
+
+const statusCodeErrorMessages = {
+    400: 'An error occurred. New password is not in the proper format.',
+    401: 'An error occurred. You do not have permission to make this update.',
+    404: 'An error occurred. User was not found.',
+    500: 'A server error occurred. Please try your update again.',
+};
 
 export default function ChangePassword({ id }: { id: string }) {
     const password = useRef<string>('');
@@ -32,31 +39,7 @@ export default function ChangePassword({ id }: { id: string }) {
             body: JSON.stringify({ password: password.current }),
         }).catch(error => console.error(error.name + ': ' + error.message));
 
-        if (!res || res.status !== 200) setIsSubmitting(false);
-
-        switch (res?.status) {
-            case undefined:
-                setError('An error occurred. Please try your update again.');
-                break;
-            case 200:
-                setError('');
-                signOut({ callbackUrl: '/' });
-                break;
-            case 400:
-                setError('An error occurred. New password is not in the proper format.');
-                break;
-            case 401:
-                setError('An error occurred. You do not have permission to make this update.');
-                break;
-            case 404:
-                setError('An error occurred. User was not found.');
-                break;
-            case 500:
-                setError('A server error occurred. Please try your update again.');
-                break;
-            default:
-                setError('An unknown error occurred. Please try your update again.');
-        }
+        processStatusCodeWithSignout(res, statusCodeErrorMessages, setError, setIsSubmitting);
     };
 
     return (
