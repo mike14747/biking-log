@@ -4,10 +4,11 @@ import { useState } from 'react';
 import Button from '../Button';
 import Loading from '../Loading';
 import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
+import { StatusCodeObj } from '../../../types';
 
 import styles from '../../../styles/profile.module.css';
 
-const statusCodeErrorMessages = {
+const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. A bad request was made.',
     401: 'An error occurred. You do not have permission to delete this account.',
     404: 'An error occurred. User was not found.',

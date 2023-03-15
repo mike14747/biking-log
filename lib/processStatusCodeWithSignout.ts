@@ -1,11 +1,8 @@
 import { signOut } from 'next-auth/react';
 import { Dispatch, SetStateAction } from 'react';
+import { StatusCodeObj } from '../types';
 
-type StatusCodeType = {
-    [key: number]: string;
-}
-
-export default function processStatusCodeWithSignout(res: void | Response, statusCodeErrorMessages: StatusCodeType, setError: Dispatch<SetStateAction<string>>, setIsSubmitting: Dispatch<SetStateAction<boolean>>) {
+export default function processStatusCodeWithSignout(res: void | Response, statusCodeErrorMessages: StatusCodeObj, setError: Dispatch<SetStateAction<string>>, setIsSubmitting: Dispatch<SetStateAction<boolean>>) {
     if (res?.status === 200) {
         setError('');
         signOut({ callbackUrl: '/' });

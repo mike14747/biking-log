@@ -34,3 +34,7 @@ export type ViewButtonState = {
     showChangeEmail: boolean;
     showDeleteAccount: boolean;
 }
+
+export type StatusCodeObj = {
+    [key: number]: string;
+}

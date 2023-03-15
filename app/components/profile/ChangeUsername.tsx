@@ -5,10 +5,11 @@ import Button from '../Button';
 import Loading from '../Loading';
 import FormInputForUsername from '../FormInputForUsername';
 import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
+import { StatusCodeObj } from '../../../types';
 
 import styles from '../../../styles/profile.module.css';
 
-const statusCodeErrorMessages = {
+const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. New username is not in the proper format.',
     401: 'An error occurred. You do not have permission to make this update.',
     404: 'An error occurred. User was not found.',
