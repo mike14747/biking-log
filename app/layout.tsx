@@ -26,18 +26,28 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
     title: 'Biking Log',
     description: 'Log all your bike riding data',
+    viewport: {
+        width: 'device-width',
+        initialScale: 1,
+        maximumScale: 1,
+    },
+    icons: {
+        icon: [
+            {
+                url: '/images/biking_log_favicon-16x16.png',
+                sizes: '16x16',
+            },
+            {
+                url: '/images/biking_log_favicon-32x32.png',
+                sizes: '32x32',
+            },
+        ],
+    },
 };
 
 export default async function RootLayout({ children, session }: RootLayoutProps) {
     return (
         <html lang="en" className={openSans.variable}>
-            <head>
-                <meta content="width=device-width, initial-scale=1" name="viewport" />
-                {/* <link rel="icon" href="data:," /> */}
-                <link rel="icon" type="image/png" href="/images/biking_log_favicon-16x16.png" sizes="16x16" />
-                <link rel="icon" type="image/png" href="/images/biking_log_favicon-32x32.png" sizes="32x32" />
-            </head>
-
             <body id="appWrapper">
                 <ClientSessionProvider session={session}>
                     <SkipToMain />
