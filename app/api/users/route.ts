@@ -3,9 +3,9 @@ import { getInfoForAllUsers, registerNewUser } from '../../../lib/api';
 import { getToken } from 'next-auth/jwt';
 
 // get info for all users, but only if the user is logged in and has a role of admin
-export async function GET(req: NextRequest) {
+export async function GET(request: NextRequest) {
     try {
-        const token = await getToken({ req });
+        const token = await getToken({ req: request });
         if (token?.role !== 'admin') return NextResponse.json({ error: 'You need to be logged in with the role of admin to access this route.' }, { status: 401 });
 
         const data = await getInfoForAllUsers();

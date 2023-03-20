@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { changePassword } from '../../../../../lib/api';
 
-export async function PUT(req: NextRequest, { params }) {
+export async function PUT(request: NextRequest, { params }) {
     try {
-        const token = await getToken({ req });
+        const token = await getToken({ req: request });
 
-        const { userId, password, resetPasswordToken } = await req.json();
+        const { userId, password, resetPasswordToken } = await request.json();
         const id = params.id;
         if (!id || !password) return NextResponse.json(null, { status: 400 });
 

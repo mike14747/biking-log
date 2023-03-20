@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { changeEmail } from '../../../../../lib/api';
 
-export async function PUT(req: NextRequest, { params }) {
+export async function PUT(request: NextRequest, { params }) {
     try {
-        const token = await getToken({ req });
+        const token = await getToken({ req: request });
         if (!token) return NextResponse.json(null, { status: 401 });
 
-        const { email } = await req.json();
+        const { email } = await request.json();
         const id = params.id;
 
         if (!id || !email) return NextResponse.json(null, { status: 400 });

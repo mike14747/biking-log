@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { deleteAccount } from '../../../../../lib/api';
 
-export async function DELETE(req: NextRequest, { params }) {
+export async function DELETE(request: NextRequest, { params }) {
     try {
-        const token = await getToken({ req });
+        const token = await getToken({ req: request });
         if (!token) return NextResponse.json(null, { status: 401 });
         const id = params.id;
 
