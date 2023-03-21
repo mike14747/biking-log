@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "target": "es6",
         "lib": [
             "dom",
             "dom.iterable",
@@ -22,7 +23,16 @@
                 "name": "next"
             }
         ],
-        "strictNullChecks": true
+        "strictNullChecks": true,
+        "noEmitOnError": true,
+        "removeComments": true,
+        "noUnusedParameters": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "typeRoots": [
+            "./types",
+            "./node_modules/@types"
+        ],
     },
     "include": [
         "next-env.d.ts",
