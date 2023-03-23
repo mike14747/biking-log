@@ -4,7 +4,13 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { getUserProfile } from '../../../../lib/api';
 
-export async function GET(request: NextRequest, { params }) {
+type ParamsType = {
+    params: {
+        id: string;
+    }
+}
+
+export async function GET(request: NextRequest, { params }: ParamsType) {
     try {
         const token = await getToken({ req: request });
         if (!token) return NextResponse.json({ error: 'You need to be logged in to access this route.' }, { status: 401 });
@@ -16,7 +22,9 @@ export async function GET(request: NextRequest, { params }) {
         if (!data) return NextResponse.json(null, { status: 500 });
         return data.length === 1 ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 404 });
     } catch (error) {
-        console.log('error:', error.message);
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
+
+        console.log('error:', errorMessage);
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }

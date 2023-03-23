@@ -1,6 +1,6 @@
-import mysql from 'serverless-mysql';
+import mysql, { ServerlessMysql } from 'serverless-mysql';
 
-const db = mysql({
+const db: ServerlessMysql = mysql({
     config: {
         host: process.env.MYSQL_HOST,
         port: process.env.MYSQL_PORT,
@@ -10,13 +10,13 @@ const db = mysql({
     },
 });
 
-export default async function runQuery(queryString, queryParamsArr) {
+export default async function runQuery(queryString: string, queryParamsArr: Array<string | number>) {
     try {
         const data = await db.query(queryString, queryParamsArr);
         await db.end();
         return data;
     } catch (error) {
-        console.error(error);
+        console.log(error);
         return null;
     }
 }

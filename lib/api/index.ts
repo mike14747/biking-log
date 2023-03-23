@@ -35,7 +35,7 @@ export const getUserForSignin = async (username: string, password: string) => {
 
 export const getInfoForAllUsers = async () => {
     const queryString = 'SELECT id, username, email, role FROM users ORDER BY id ASC;';
-    const queryParams = [];
+    const queryParams: [] = [];
     return await runQuery(queryString, queryParams);
 };
 

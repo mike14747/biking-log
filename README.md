@@ -2,7 +2,7 @@
 
 ## Route handlers
 
-Route handlers are new to next.js version 13.2. 
+Route handlers are new to next.js version 13.2.
 
 They reside in the new appDir, but don't necessarily have to be exclusive to the /app/api folder, though I have reasons why I think that is preferable... eg: they won't conflict with pages because a route could have a page and route associated with it.
 
@@ -15,20 +15,20 @@ Route handlers must be used in the /app folder and must have the file name of **
 The basic structure of a route handler is to export an async function with the name of the http method it is to be used for.
 
 ```ts
-export async function GET(request: Request) { }
+export async function GET(request: Request) {}
 
-export async function HEAD(request: Request) { }
+export async function HEAD(request: Request) {}
 
-export async function POST(request: Request) { }
+export async function POST(request: Request) {}
 
-export async function PUT(request: Request) { }
+export async function PUT(request: Request) {}
 
-export async function DELETE(request: Request) { }
+export async function DELETE(request: Request) {}
 
-export async function PATCH(request: Request) { }
+export async function PATCH(request: Request) {}
 
 // If `OPTIONS` is not defined, Next.js will automatically implement `OPTIONS` and  set the appropriate Response `Allow` header depending on the other methods defined in the route handler.
-export async function OPTIONS(request: Request) { }
+export async function OPTIONS(request: Request) {}
 ```
 
 This is a benefit because in the past you would have to check that any requests to a route were of the right type.
@@ -57,6 +57,40 @@ export async function GET(request: NextRequest, { params }) {
 }
 
 // would return { msg: 'Hello user 1234! Status is: active' }
+```
+
+---
+
+From openai chat as to how to strongly type serverless-mysql:
+
+```ts
+import mysql, { Connection, RowDataPacket } from 'serverless-mysql';
+
+// Define the interface for the row data
+interface UserRow extends RowDataPacket {
+    id: number;
+    name: string;
+    email: string;
+}
+
+// Create a connection to the database
+const db: Connection = mysql({
+    config: {
+        host: 'localhost',
+        user: 'root',
+        database: 'mydatabase',
+    },
+});
+
+// Define the query
+const getUsers = async (): Promise<UserRow[]> => {
+    const query = 'SELECT * FROM users';
+    const results = await db.query<UserRow[]>(query);
+    return results;
+};
+
+// Call the query function
+getUsers().then((users) => console.log(users));
 ```
 
 ---
