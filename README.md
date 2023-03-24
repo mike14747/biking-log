@@ -61,4 +61,8 @@ export async function GET(request: NextRequest, { params }) {
 
 ---
 
-testing
+## Database
+
+I began this app with only a local database using the serverless-mysql package. It has since been updated to use a remote planetscale database.
+
+---
