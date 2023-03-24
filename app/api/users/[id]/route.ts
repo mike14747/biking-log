@@ -3,14 +3,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { getUserProfile } from '../../../../lib/api';
+import { IdParams } from '../../../../types';
+import { handleAPICatchError } from '../../../../lib/handleCatchErrors';
 
-type ParamsType = {
-    params: {
-        id: string;
-    }
-}
-
-export async function GET(request: NextRequest, { params }: ParamsType) {
+export async function GET(request: NextRequest, { params }: IdParams) {
     try {
         const token = await getToken({ req: request });
         if (!token) return NextResponse.json(null, { status: 401 });
@@ -22,8 +18,6 @@ export async function GET(request: NextRequest, { params }: ParamsType) {
         if (!data) return NextResponse.json(null, { status: 500 });
         return data.length === 1 ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 404 });
     } catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
-        console.log('error:', errorMessage);
-        return NextResponse.json({ error: errorMessage }, { status: 500 });
+        return handleAPICatchError(error);
     }
 }

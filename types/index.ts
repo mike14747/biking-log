@@ -38,3 +38,9 @@ export type ViewButtonState = {
 export type StatusCodeObj = {
     [key: number]: string;
 }
+
+export type IdParams = {
+    params: {
+        id: string;
+    }
+}
