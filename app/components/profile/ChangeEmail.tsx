@@ -12,7 +12,6 @@ const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. New email is not in the proper format.',
     401: 'An error occurred. You do not have permission to make this update.',
     404: 'An error occurred. User was not found.',
-    406: 'An error occurred. Cannot change your email to the same one already in the system.',
     500: 'A server error occurred. Please try your update again.',
 };
 

@@ -8,7 +8,7 @@ const config = {
 
 const db = connect(config);
 
-export default async function runQuery(queryString: string, queryParamsArr: Array<string | number | null>) {
+export default async function runQuery(queryString: string, queryParamsArr: Array<string | number | Date | null>) {
     try {
         return await db.execute(queryString, queryParamsArr);
     } catch (error) {
