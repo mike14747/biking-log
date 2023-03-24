@@ -1,11 +1,3 @@
-DROP DATABASE IF EXISTS biking_log_db;
-CREATE DATABASE biking_log_db;
-USE biking_log_db;
-
-set foreign_key_checks=0;
-
--- --------------------------------------------------------
-
 CREATE TABLE users (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     username varchar(255) NOT NULL UNIQUE,
@@ -24,7 +16,6 @@ CREATE TABLE users (
 CREATE TABLE data (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
     user_id int UNSIGNED NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
     date date NOT NULL,
     distance decimal(5,2) NOT NULL,
     time_duration time,
@@ -34,9 +25,8 @@ CREATE TABLE data (
     wind_dir varchar(255),
     location varchar(255),
     notes varchar(255),
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    KEY user_id_idx (user_id)
 );
 
 -- --------------------------------------------------------
-
-set foreign_key_checks=1;

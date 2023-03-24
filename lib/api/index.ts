@@ -78,7 +78,8 @@ export const registerNewUser = async (username: string, password: string, email:
 export const getUserProfile = async (id: number) => {
     const queryString = 'SELECT id, username, email FROM users WHERE id=? LIMIT 1;';
     const queryParams = [id];
-    return await runQuery(queryString, queryParams);
+    const result = await runQuery(queryString, queryParams);
+    return result?.rows;
 };
 
 export const changeUsername = async (id: number, username: string) => {
@@ -153,33 +154,33 @@ export async function deleteAccount(id: number) {
     return { code: 500 };
 }
 
-export const forgottenUsername = async (email: string) => {
-    if (!email) return { code: 400 };
+// export const forgottenUsername = async (email: string) => {
+//     if (!email) return { code: 400 };
 
-    const queryString = 'SELECT id, username, email FROM users WHERE email=?;';
-    const queryParams = [email];
-    const user = await runQuery(queryString, queryParams);
+//     const queryString = 'SELECT id, username, email FROM users WHERE email=?;';
+//     const queryParams = [email];
+//     const user = await runQuery(queryString, queryParams);
 
-    if (user?.length > 0) {
-        const mailDetails = {
-            from: 'rmlbb.noreply@gmail.com',
-            to: email,
-            subject: 'Forgot Username',
-            html: '<p>A request for your biking-log username(s) has been made for this email address.</p><p>The biking-log username(s) associated with this email address is/are:<br /><br />' + user.map(u => u.username).join('<br />') + '</p>',
-        };
+//     if (user?.length > 0) {
+//         const mailDetails = {
+//             from: 'rmlbb.noreply@gmail.com',
+//             to: email,
+//             subject: 'Forgot Username',
+//             html: '<p>A request for your biking-log username(s) has been made for this email address.</p><p>The biking-log username(s) associated with this email address is/are:<br /><br />' + user.map(u => u.username).join('<br />') + '</p>',
+//         };
 
-        try {
-            const emailSent = await mailTransporter.sendMail(mailDetails);
-            return emailSent ? { code: 200 } : { code: 500 };
-        } catch (error) {
-            console.log(error);
-            return { code: 500 };
-        }
-    } else {
-        // email address doesn't match any in the database
-        return { code: 404 };
-    }
-};
+//         try {
+//             const emailSent = await mailTransporter.sendMail(mailDetails);
+//             return emailSent ? { code: 200 } : { code: 500 };
+//         } catch (error) {
+//             console.log(error);
+//             return { code: 500 };
+//         }
+//     } else {
+//         // email address doesn't match any in the database
+//         return { code: 404 };
+//     }
+// };
 
 export const resetPassword = async (username: string, email: string) => {
     if (!username || !email) return { code: 400 };

@@ -1,22 +1,19 @@
-import mysql, { ServerlessMysql } from 'serverless-mysql';
+import { connect } from '@planetscale/database';
 
-const db: ServerlessMysql = mysql({
-    config: {
-        host: process.env.MYSQL_HOST,
-        port: process.env.MYSQL_PORT,
-        database: process.env.MYSQL_DATABASE,
-        user: process.env.MYSQL_USER,
-        password: process.env.MYSQL_PASSWORD,
-    },
-});
+const config = {
+    host: process.env.DATABASE_HOST,
+    username: process.env.DATABASE_USERNAME,
+    password: process.env.DATABASE_PASSWORD,
+};
 
-export default async function runQuery(queryString: string, queryParamsArr: Array<string | number>) {
+const db = connect(config);
+
+export default async function runQuery(queryString: string, queryParamsArr: Array<string | number | null>) {
     try {
-        const data = await db.query(queryString, queryParamsArr);
-        await db.end();
-        return data;
+        return await db.execute(queryString, queryParamsArr);
     } catch (error) {
-        console.log(error);
+        const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred.';
+        console.log('error:', errorMessage);
         return null;
     }
 }
