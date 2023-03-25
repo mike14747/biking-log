@@ -8,6 +8,7 @@ import { useSession } from 'next-auth/react';
 import FormInputForNewPassword from '../../../components/FormInputForNewPassword';
 import Button from '../../../components/Button';
 import Loading from '../../../components/Loading';
+import { StatusCodeObj } from '../../../../types';
 
 import styles from '../../../../styles/profile.module.css';
 
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     title: 'Biking Log - Reset Password',
 };
 
-const statusCodeErrorMessages = {
+const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. New password is not in the proper format.',
     401: 'An error occurred. You do not have permission to make this update.',
     406: 'An error occurred. User or reset password token do not exist.',

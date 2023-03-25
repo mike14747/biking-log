@@ -7,8 +7,9 @@ import FormInputForNewPassword from '../components/FormInputForNewPassword';
 import FormInputForEmail from '../components/FormInputForEmail';
 import Button from '../components/Button';
 import Loading from '../components/Loading';
+import { StatusCodeObj } from '../../types';
 
-const statusCodeErrorMessages = {
+const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. One or more of the fields are missing or not in the proper format.',
     409: 'An error occurred. The username you submitted is already in use.',
     500: 'A server error occurred. Please try your update again.',
