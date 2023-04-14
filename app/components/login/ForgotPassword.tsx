@@ -1,12 +1,12 @@
 'use client';
 
 import { FormEvent, useRef, useState } from 'react';
-import Button from '../Button';
-import FormInputForUsername from '../FormInputForUsername';
-import FormInputForEmail from '../FormInputForEmail';
-import Loading from '../Loading';
+import Button from '@/components/Button';
+import FormInputForUsername from '@/components/FormInputForUsername';
+import FormInputForEmail from '@/components/FormInputForEmail';
+import Spinner from '@/components/Spinner';
 
-import styles from '../../../styles/ForgotLoginInfo.module.css';
+import styles from '@/styles/ForgotLoginInfo.module.css';
 
 export default function ForgotPassword() {
     const username = useRef<string>('');
@@ -62,7 +62,7 @@ export default function ForgotPassword() {
                 Enter the username and email address associated with your account and an email will be sent to you with a link to reset your password.
             </p>
 
-            {isSubmitting && <Loading />}
+            {isSubmitting && <Spinner size="large" />}
 
             {error && <p className="error">{error}</p>}
 

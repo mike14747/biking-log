@@ -5,12 +5,12 @@ import { useRef, useState, useEffect, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useSession } from 'next-auth/react';
-import FormInputForNewPassword from '../../../components/FormInputForNewPassword';
-import Button from '../../../components/Button';
-import Loading from '../../../components/Loading';
-import { StatusCodeObj } from '../../../../types';
+import FormInputForNewPassword from '@/components/FormInputForNewPassword';
+import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
+import { StatusCodeObj } from '@/types/index';
 
-import styles from '../../../../styles/profile.module.css';
+import styles from '@/styles/profile.module.css';
 
 type PageProps = {
     params: {
@@ -98,7 +98,7 @@ export default function ResetLink({ params }: PageProps) {
                     </p>
                 }
 
-                {isLoading && <Loading />}
+                {isLoading && <Spinner size="large" />}
 
                 {!session && !isSuccessfullyUpdated &&
                     <>

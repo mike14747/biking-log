@@ -1,9 +1,9 @@
 import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 
-import { getUserForSignin } from '../../../lib/api';
+import { getUserForSignin } from '@/lib/api';
 
-export default NextAuth({
+const handler = NextAuth({
     providers: [
         Credentials({
             name: 'Credentials',
@@ -17,6 +17,7 @@ export default NextAuth({
 
                 const { username, password } = credentials;
                 const user = await getUserForSignin(username, password);
+
                 return user ? { id: user.id, name: user.username, role: user.role } : null;
             },
         }),
@@ -32,10 +33,10 @@ export default NextAuth({
     callbacks: {
         async jwt({ token, user }) {
             if (user?.id) token.id = user.id;
+            if (user?.name) token.name = user.name;
             if (user?.role) token.role = user.role;
             return token;
         },
-
         async session({ session, token }) {
             if (token.id && session.user) session.user.id = token.id;
             if (token.role && session.user) session.user.role = token.role;
@@ -43,3 +44,5 @@ export default NextAuth({
         },
     },
 });
+
+export { handler as GET, handler as POST };

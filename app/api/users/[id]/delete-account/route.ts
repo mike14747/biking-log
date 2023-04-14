@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { deleteAccount } from '../../../../../lib/api';
-import { IdParams } from '../../../../../types';
+import { deleteAccount } from '@/lib/api';
+import { IdParams } from '@/types/index';
 
 export async function DELETE(request: NextRequest, { params }: IdParams) {
     try {

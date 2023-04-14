@@ -2,8 +2,8 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 // eslint-disable-next-line camelcase
 import { getServerSession } from 'next-auth/next';
-import CurrentProfile from '../components/profile/CurrentProfile';
-import { getUserProfile } from '../../lib/api/index';
+import CurrentProfile from '@/components/profile/CurrentProfile';
+import { getUserProfile } from '@/lib/api/index';
 
 export const metadata: Metadata = {
     title: 'Biking Log - Profile',

@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import Button from '../Button';
-import Loading from '../Loading';
-import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
-import { StatusCodeObj } from '../../../types';
+import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
+import processStatusCodeWithSignout from '@/lib/processStatusCodeWithSignout';
+import { StatusCodeObj } from '@/types/index';
 
-import styles from '../../../styles/profile.module.css';
+import styles from '@/styles/profile.module.css';
 
 const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. A bad request was made.',
@@ -43,7 +43,7 @@ export default function DeleteAccount({ id }: { id: string }) {
                 <h3>Delete your account</h3>
             </div>
 
-            {isSubmitting && <Loading />}
+            {isSubmitting && <Spinner size="large" />}
 
             {error && <p className={styles.error}>{error}</p>}
 

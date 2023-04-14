@@ -2,12 +2,12 @@
 
 import { useRef, useState, FormEvent } from 'react';
 import { useSession } from 'next-auth/react';
-import FormInputForUsername from '../components/FormInputForUsername';
-import FormInputForNewPassword from '../components/FormInputForNewPassword';
-import FormInputForEmail from '../components/FormInputForEmail';
-import Button from '../components/Button';
-import Loading from '../components/Loading';
-import { StatusCodeObj } from '../../types';
+import FormInputForUsername from '@/components/FormInputForUsername';
+import FormInputForNewPassword from '@/components/FormInputForNewPassword';
+import FormInputForEmail from '@/components/FormInputForEmail';
+import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
+import { StatusCodeObj } from '@/types/index';
 
 const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. One or more of the fields are missing or not in the proper format.',
@@ -59,9 +59,7 @@ export default function Register() {
                     Register
                 </h2>
 
-                {status === 'loading' &&
-                    <Loading />
-                }
+                {status === 'loading' && <Spinner size="large" />}
 
                 {status === 'authenticated' &&
                     <p className="error">

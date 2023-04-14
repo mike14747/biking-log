@@ -33,6 +33,21 @@
             "./types",
             "./node_modules/@types"
         ],
+        "baseUrl": ".",
+        "paths": {
+            "@/styles/*": [
+                "styles/*"
+            ],
+            "@/lib/*": [
+                "lib/*"
+            ],
+            "@/types/*": [
+                "types/*"
+            ],
+            "@/components/*": [
+                "app/components/*"
+            ]
+        }
     },
     "include": [
         "next-env.d.ts",

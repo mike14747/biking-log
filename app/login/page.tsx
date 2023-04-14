@@ -3,10 +3,10 @@
 import { FormEvent, ChangeEvent, useRef, useState, useEffect } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import FormInput from '../components/FormInput';
-import Button from '../components/Button';
-import ForgotLoginInfo from '../components/login/ForgotLoginInfo';
-import Loading from '../components/Loading';
+import FormInput from '@/components/FormInput';
+import Button from '@/components/Button';
+import ForgotLoginInfo from '@/components/login/ForgotLoginInfo';
+import Spinner from '@/components/Spinner';
 
 export default function Login() {
     const { status } = useSession();
@@ -39,6 +39,8 @@ export default function Login() {
             // callbackUrl: redirectUrl,
         });
 
+        if (!loginStatus) setError('A network error has occurred.');
+
         // if the user did not successfully log in, set the error that will be displayed
         if (loginStatus && (!loginStatus.ok || loginStatus.status !== 200)) {
             setError('Login Failed... check your credentials and try again.');
@@ -50,7 +52,7 @@ export default function Login() {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [status]);
 
-    if (status === 'loading') return <Loading />;
+    if (status === 'loading') return <Spinner size="large" />;
 
     if (status === 'unauthenticated') {
         return (

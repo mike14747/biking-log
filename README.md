@@ -63,6 +63,6 @@ export async function GET(request: NextRequest, { params }) {
 
 ## Database
 
-I began this app with only a local database using the serverless-mysql package. It has since been updated to use a remote planetscale database.
+I began this app with only a local database using the serverless-mysql package. It has since been updated to use a remote free planetscale database. **NOTE**: The free planetscale databases sleep after a week of inactivity and you have to go to their website and wake them manually.
 
 ---

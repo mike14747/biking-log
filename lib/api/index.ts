@@ -1,8 +1,8 @@
-import runQuery from '../db';
-import { mailTransporter } from '../nodemailerConfig';
-import { usernamePattern, emailPattern, passwordPattern } from '../formInputPatterns';
-import { generateRandom, hashPassword } from '../cryptoUtils';
-import * as sft from '../../types/serverlessFunctionTypes';
+import runQuery from '@/lib/db';
+import { mailTransporter } from '@/lib/nodemailerConfig';
+import { usernamePattern, emailPattern, passwordPattern } from '@/lib/formInputPatterns';
+import { generateRandom, hashPassword } from '@/lib/cryptoUtils';
+import * as sft from '@/types/serverlessFunctionTypes';
 
 export const checkForAvailableUsername = async (username: string) => {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';

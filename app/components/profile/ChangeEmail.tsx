@@ -1,12 +1,12 @@
 'use client';
 
 import { useRef, useState, Dispatch, SetStateAction, FormEvent, RefObject } from 'react';
-import Button from '../Button';
-import Loading from '../Loading';
-import FormInputForEmail from '../FormInputForEmail';
-import { UserInfo, StatusCodeObj } from '../../../types';
+import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
+import FormInputForEmail from '@/components/FormInputForEmail';
+import { UserInfo, StatusCodeObj } from '@/types/index';
 
-import styles from '../../../styles/profile.module.css';
+import styles from '@/styles/profile.module.css';
 
 const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. New email is not in the proper format.',
@@ -63,7 +63,7 @@ export default function ChangeEmail({ id, setUser }: { id: string, setUser: Disp
             {isEmailUpdated && <p className={styles.success}>Your email address has been successfully updated.</p>}
 
             <form ref={emailForm as RefObject<HTMLFormElement>} className={styles.updateGroup} onSubmit={handleChangeEmailSubmit}>
-                {isSubmitting && <Loading />}
+                {isSubmitting && <Spinner size="large" />}
 
                 {error && <p className={styles.error}>{error}</p>}
 

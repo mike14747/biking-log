@@ -2,9 +2,9 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { getUserProfile } from '../../../../lib/api';
-import { IdParams } from '../../../../types';
-import { handleAPICatchError } from '../../../../lib/handleCatchErrors';
+import { getUserProfile } from '@/lib/api';
+import { IdParams } from '@/types/index';
+import { handleAPICatchError } from '@/lib/handleCatchErrors';
 
 export async function GET(request: NextRequest, { params }: IdParams) {
     try {

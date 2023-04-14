@@ -1,13 +1,13 @@
 'use client';
 
 import { useRef, useState, FormEvent } from 'react';
-import Button from '../Button';
-import Loading from '../Loading';
-import FormInputForNewPassword from '../FormInputForNewPassword';
-import processStatusCodeWithSignout from '../../../lib/processStatusCodeWithSignout';
-import { StatusCodeObj } from '../../../types';
+import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
+import FormInputForNewPassword from '@/components/FormInputForNewPassword';
+import processStatusCodeWithSignout from '@/lib/processStatusCodeWithSignout';
+import { StatusCodeObj } from '@/types/index';
 
-import styles from '../../../styles/profile.module.css';
+import styles from '@/styles/profile.module.css';
 
 const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. New password is not in the proper format.',
@@ -54,7 +54,7 @@ export default function ChangePassword({ id }: { id: string }) {
             </div>
 
             <form className={styles.updateGroup} onSubmit={handleChangePasswordSubmit}>
-                {isSubmitting && <Loading />}
+                {isSubmitting && <Spinner size="large" />}
 
                 {error && <p className={styles.error}>{error}</p>}
 

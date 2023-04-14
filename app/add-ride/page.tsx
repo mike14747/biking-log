@@ -2,9 +2,9 @@
 
 import { useSession } from 'next-auth/react';
 import { FormEvent, ChangeEvent, useRef, useState } from 'react';
-import FormInput from '../components/FormInput';
-import Button from '../components/Button';
-import Loading from '../components/Loading';
+import FormInput from '@/components/FormInput';
+import Button from '@/components/Button';
+import Spinner from '@/components/Spinner';
 
 type RideData = {
     date: string;
@@ -71,7 +71,7 @@ export default function AddRideData() {
     return (
         <main id="main">
             {status === 'loading' &&
-                <Loading />
+                <Spinner size="large" />
             }
 
             {status === 'authenticated' &&

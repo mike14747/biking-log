@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { resetPassword } from '../../../../lib/api';
-import { handleAPICatchError  } from '../../../../lib/handleCatchErrors';
+import { resetPassword } from '@/lib/api';
+import { handleAPICatchError  } from '@/lib/handleCatchErrors';
 
 export async function POST(request: NextRequest) {
     try {

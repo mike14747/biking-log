@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getInfoForAllUsers, registerNewUser } from '../../../lib/api';
+import { getInfoForAllUsers, registerNewUser } from '@/lib/api';
 import { getToken } from 'next-auth/jwt';
-import { handleAPICatchError } from '../../../lib/handleCatchErrors';
+import { handleAPICatchError } from '@/lib/handleCatchErrors';
 
 // get info for all users, but only if the user is logged in and has a role of admin
 export async function GET(request: NextRequest) {
