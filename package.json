@@ -24,7 +24,7 @@
     "homepage": "https://github.com/mike14747/biking-log#readme",
     "dependencies": {
         "@planetscale/database": "^1.6.0",
-        "next": "^13.2.4",
+        "next": "^13.3.0",
         "next-auth": "^4.22.0",
         "nodemailer": "^6.9.1",
         "react": "^18.2.0",
