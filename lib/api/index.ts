@@ -3,6 +3,7 @@ import { mailTransporter } from '@/lib/nodemailerConfig';
 import { usernamePattern, emailPattern, passwordPattern } from '@/lib/formInputPatterns';
 import { generateRandom, hashPassword } from '@/lib/cryptoUtils';
 import * as sft from '@/types/serverlessFunctionTypes';
+import { UserInfo, UserSignin } from '@/types/user-types';
 
 export const checkForAvailableUsername = async (username: string) => {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
@@ -18,7 +19,7 @@ export const getUserForSignin = async (username: string, password: string) => {
     const queryParams = [username, password];
     const userData = await runQuery(queryString, queryParams);
     if (userData?.rows.length !== 1) return null;
-    const user = userData.rows[0] as sft.UserSignin;
+    const user = userData.rows[0] as UserSignin;
 
     const hashedPassword = hashPassword(password, user?.salt);
     if (!hashedPassword) return null;
@@ -76,12 +77,16 @@ export const registerNewUser = async (username: string, password: string, email:
     return result?.insertId ? { code: 201 } : { code: 500 };
 };
 
-export const getUserProfile = async (id: number) => {
+export async function getUserProfile(id: number) {
     const queryString = 'SELECT id, username, email FROM users WHERE id=? LIMIT 1;';
     const queryParams = [id];
     const result = await runQuery(queryString, queryParams);
-    return result?.rows;
-};
+
+    if (!result || result.rows.length !== 1) return null;
+
+    const userRow = result?.rows[0] as UserInfo;
+    return userRow;
+}
 
 export const changeUsername = async (id: number, username: string) => {
     if (!id || !username) return { code: 400 };
