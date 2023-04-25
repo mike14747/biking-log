@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
-import LoginForm from '@/components/Login-temp/LoginForm';
+import LoginForm from '@/components/Login/LoginForm';
 
 export const metadata: Metadata = {
     title: 'Biking Log - Login',
