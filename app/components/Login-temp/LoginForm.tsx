@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import FormInput from '@/components/FormInput';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
-import ForgotLoginInfo from '@/components/Login/ForgotLoginInfo';
+import ForgotLoginInfo from '@/components/Login-temp/ForgotLoginInfo';
 
 type LoginFormProps = {
     redirectUrl: string
