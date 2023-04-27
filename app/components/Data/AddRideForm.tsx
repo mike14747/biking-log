@@ -21,6 +21,7 @@ type RideData = {
 const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. Some field(s) is/are not in the proper format.',
     401: 'An error occurred. You do not have permission to perform this action.',
+    404: 'This form is currently disabled.',
     500: 'A server error occurred. Please try your update again.',
 };
 
@@ -44,20 +45,24 @@ export default function AddRideForm() {
     const handleDataSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        const id = 4;
+        // const id = 4;
 
         setIsSubmitting(true);
 
-        const res = await fetch('/api/users/' + id + '/data', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=utf-8',
-            },
-            body: JSON.stringify(state.current),
-        }).catch(error => {
-            console.error(error.name + ': ' + error.message);
-            setError('An error occurred sending the data.');
-        });
+        // const res = await fetch('/api/users/' + id + '/data', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json;charset=utf-8',
+        //     },
+        //     body: JSON.stringify(state.current),
+        // }).catch(error => {
+        //     console.error(error.name + ': ' + error.message);
+        //     setError('An error occurred sending the data.');
+        // });
+
+        const res = {
+            status: 404,
+        };
 
         setIsSubmitting(false);
 
@@ -68,7 +73,7 @@ export default function AddRideForm() {
             setError('');
         }
 
-        if (res && res.status !== 200) setError(statusCodeErrorMessages[res.status] || 'An unknown error occurred');
+        if (res && res.status !== 201) setError(statusCodeErrorMessages[res.status] || 'An unknown error occurred');
     };
 
     return (
