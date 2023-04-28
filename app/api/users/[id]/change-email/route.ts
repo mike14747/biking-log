@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { changeEmail } from '@/lib/api';
+import { changeEmail } from '@/lib/api/user';
 import { IdParams } from '@/types/index';
 import { handleAPICatchError } from '@/lib/handleCatchErrors';
 

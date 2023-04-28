@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth/next';
 import CurrentProfile from '@/components/Profile/CurrentProfile';
-import { getUserProfile } from '@/lib/api/index';
+import { getUserProfile } from '@/lib/api/user';
 import { Suspense } from 'react';
 import Spinner from '@/components/Spinner';
 

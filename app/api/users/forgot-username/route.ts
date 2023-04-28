@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { forgottenUsername } from '@/lib/api';
+import { forgottenUsername } from '@/lib/api/user';
 import { handleAPICatchError } from '@/lib/handleCatchErrors';
 
 export async function POST(request: NextRequest) {

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getInfoForAllUsers, registerNewUser } from '@/lib/api';
+import { getInfoForAllUsers, registerNewUser } from '@/lib/api/user';
 import { getToken } from 'next-auth/jwt';
 import { handleAPICatchError } from '@/lib/handleCatchErrors';
 

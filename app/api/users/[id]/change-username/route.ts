@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
-import { changeUsername } from '@/lib/api';
+import { changeUsername } from '@/lib/api/user';
 import { IdParams } from '@/types/index';
 
 export async function PUT(request: NextRequest, { params }: IdParams) {
