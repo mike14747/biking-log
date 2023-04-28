@@ -2,8 +2,7 @@ import runQuery from '@/lib/db';
 import { mailTransporter } from '@/lib/nodemailerConfig';
 import { usernamePattern, emailPattern, passwordPattern } from '@/lib/formInputPatterns';
 import { generateRandom, hashPassword } from '@/lib/cryptoUtils';
-import * as sft from '@/types/serverlessFunctionTypes';
-import { UserInfo, UserSignin } from '@/types/user-types';
+import { UserInfo, UserSignin, TokenValid, UserBasic } from '@/types/user-types';
 
 export const checkForAvailableUsername = async (username: string) => {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
@@ -117,7 +116,7 @@ export const changePassword = async (id: number, password: string, token = null)
         const queryParams = [id, token];
         const tokenValidCheck = await runQuery(queryString, queryParams);
         if (tokenValidCheck?.rows.length !== 1) return { code: 406 };
-        const tokenToCheck = tokenValidCheck.rows[0] as sft.TokenValid;
+        const tokenToCheck = tokenValidCheck.rows[0] as TokenValid;
 
         // make sure token is found and is not expired
         if (tokenToCheck?.resetPasswordExpires < new Date(Date.now())) return { code: 412 };
@@ -168,7 +167,7 @@ export const forgottenUsername = async (email: string) => {
     const queryParams = [email];
     const userData = await runQuery(queryString, queryParams);
     if (!userData) return { code: 500 };
-    const usernames = userData.rows as sft.UserBasic[];
+    const usernames = userData.rows as UserBasic[];
 
     if (usernames.length > 0) {
         const mailDetails = {
@@ -198,7 +197,7 @@ export const resetPassword = async (username: string, email: string) => {
     const userData = await runQuery(queryString, queryParams);
     if (!userData) return { code: 500 };
     if (userData.rows.length !== 1) return { code: 404 };
-    const user = userData.rows[0] as sft.UserBasic;
+    const user = userData.rows[0] as UserBasic;
 
     const id = user.id;
     // generate a reset token

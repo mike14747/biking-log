@@ -18,6 +18,7 @@ export type ViewButtonState = {
     showChangeUsername: boolean;
     showChangePassword: boolean;
     showChangeEmail: boolean;
+    showDeleteAccount: boolean;
 }
 
 export type StatusCodeObj = {

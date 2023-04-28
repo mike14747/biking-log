@@ -1,11 +1,9 @@
 declare global {
     namespace NodeJS {
         interface ProcessEnv {
-            MYSQL_HOST: string;
-            MYSQL_PORT: number;
-            MYSQL_DATABASE: string;
-            MYSQL_USER: string;
-            MYSQL_PASSWORD: string;
+            DATABASE_HOST: string;
+            DATABASE_USERNAME: string;
+            DATABASE_PASSWORD: string;
             NODE_ENV: 'development' | 'production';
             NEXTAUTH_URL: string;
             NEXTAUTH_SECRET: string;
@@ -14,6 +12,7 @@ declare global {
             GOOGLE_CLIENT_SECRET: string;
             GOOGLE_REFRESH_TOKEN: string;
             BASE_URL: string;
+            NEXT_TELEMETRY_DISABLED: number;
         }
     }
 }

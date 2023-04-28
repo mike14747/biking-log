@@ -4,7 +4,7 @@ import { FormEvent, ChangeEvent, useRef, useState } from 'react';
 import FormInput from '@/components/FormInput';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
-import { StatusCodeObj } from '@/types/index';
+import { StatusCodeObj } from '@/types/misc-types';
 
 type RideData = {
     date: string;

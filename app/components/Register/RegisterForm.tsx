@@ -6,7 +6,7 @@ import FormInputForNewPassword from '@/components/FormInputForNewPassword';
 import FormInputForEmail from '@/components/FormInputForEmail';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
-import { StatusCodeObj } from '@/types/index';
+import { StatusCodeObj } from '@/types/misc-types';
 
 const statusCodeErrorMessages: StatusCodeObj = {
     400: 'An error occurred. One or more of the fields are missing or not in the proper format.',

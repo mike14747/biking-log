@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import processStatusCodeWithSignout from '@/lib/processStatusCodeWithSignout';
-import { StatusCodeObj } from '@/types/index';
+import { StatusCodeObj } from '@/types/misc-types';
 
 import styles from '@/styles/profile.module.css';
 

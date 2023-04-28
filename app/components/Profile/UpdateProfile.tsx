@@ -6,7 +6,8 @@ import ChangeUsername from './ChangeUsername';
 import ChangePassword from './ChangePassword';
 import ChangeEmail from './ChangeEmail';
 import DeleteAccount from './DeleteAccount';
-import { UserInfo, ViewButtonState } from '@/types/index';
+import { UserInfo } from '@/types/user-types';
+import { ViewButtonState } from '@/types/misc-types';
 
 export default function UpdateProfile({ user, setUser }: { user: UserInfo, setUser: Dispatch<SetStateAction<UserInfo>> }) {
     const [viewState, setViewState] = useState<ViewButtonState>({

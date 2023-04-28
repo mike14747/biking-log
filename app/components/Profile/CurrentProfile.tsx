@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import UpdateProfile from './UpdateProfile';
-import { UserInfo, UserObjProp } from '@/types/index';
+import { UserInfo, UserObjProp } from '@/types/user-types';
 
 import styles from '@/styles/profile.module.css';
 
