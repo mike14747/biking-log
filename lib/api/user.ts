@@ -4,16 +4,16 @@ import { usernamePattern, emailPattern, passwordPattern } from '@/lib/formInputP
 import { generateRandom, hashPassword } from '@/lib/cryptoUtils';
 import { UserInfo, UserSignin, TokenValid, UserBasic } from '@/types/user-types';
 
-export const checkForAvailableUsername = async (username: string) => {
+export async function checkForAvailableUsername(username: string) {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
     const queryParams = [
         username,
     ];
     const result = await runQuery(queryString, queryParams);
     return result?.rows;
-};
+}
 
-export const getUserForSignin = async (username: string, password: string) => {
+export async function getUserForSignin(username: string, password: string) {
     const queryString = 'SELECT id, username, password, salt, role FROM users WHERE username=? LIMIT 1;';
     const queryParams = [username, password];
     const userData = await runQuery(queryString, queryParams);
@@ -32,15 +32,15 @@ export const getUserForSignin = async (username: string, password: string) => {
     }
 
     return null;
-};
+}
 
-export const getInfoForAllUsers = async () => {
+export async function getInfoForAllUsers() {
     const queryString = 'SELECT id, username, email, role FROM users ORDER BY id ASC;';
     const queryParams: [] = [];
     return await runQuery(queryString, queryParams);
-};
+}
 
-export const registerNewUser = async (username: string, password: string, email: string) => {
+export async function registerNewUser(username: string, password: string, email: string) {
     const pattern1 = new RegExp(usernamePattern);
     if (!username || !pattern1.test(username)) return { code: 400 };
 
@@ -74,7 +74,7 @@ export const registerNewUser = async (username: string, password: string, email:
     const result = await runQuery(queryString, queryParams);
 
     return result?.insertId ? { code: 201 } : { code: 500 };
-};
+}
 
 export async function getUserProfile(id: number) {
     const queryString = 'SELECT id, username, email FROM users WHERE id=? LIMIT 1;';
@@ -87,7 +87,7 @@ export async function getUserProfile(id: number) {
     return userRow;
 }
 
-export const changeUsername = async (id: number, username: string) => {
+export async function changeUsername(id: number, username: string) {
     if (!id || !username) return { code: 400 };
     const pattern = new RegExp(usernamePattern);
     if (!pattern.test(username)) return { code: 400 };
@@ -103,9 +103,9 @@ export const changeUsername = async (id: number, username: string) => {
     if (result?.rowsAffected === 0) return { code: 404 };
     if (result?.rowsAffected === 1) return { code: 200 };
     return { code: 500 };
-};
+}
 
-export const changePassword = async (id: number, password: string, token = null) => {
+export async function changePassword(id: number, password: string, token = null) {
     if (!id || !password) return { code: 400 };
     const pattern = new RegExp(passwordPattern);
     if (!pattern.test(password)) return { code: 400 };
@@ -132,9 +132,9 @@ export const changePassword = async (id: number, password: string, token = null)
     if (result?.rowsAffected === 0) return { code: 404 };
     if (result?.rowsAffected === 1) return { code: 200 };
     return { code: 500 };
-};
+}
 
-export const changeEmail = async (id: number, email: string) => {
+export async function changeEmail(id: number, email: string) {
     if (!id || !email) return { code: 400 };
     const pattern = new RegExp(emailPattern);
     if (!pattern.test(email)) return { code: 400 };
@@ -146,7 +146,7 @@ export const changeEmail = async (id: number, email: string) => {
     if (result?.rowsAffected === 0) return { code: 404 };
     if (result?.rowsAffected === 1) return { code: 200 };
     return { code: 500 };
-};
+}
 
 export async function deleteAccount(id: number) {
     if (!id) return { code: 400 };
@@ -160,7 +160,7 @@ export async function deleteAccount(id: number) {
     return { code: 500 };
 }
 
-export const forgottenUsername = async (email: string) => {
+export async function forgottenUsername(email: string) {
     if (!email) return { code: 400 };
 
     const queryString = 'SELECT id, username, email FROM users WHERE email=?;';
@@ -187,9 +187,9 @@ export const forgottenUsername = async (email: string) => {
     } else {
         return { code: 404 };
     }
-};
+}
 
-export const resetPassword = async (username: string, email: string) => {
+export async function resetPassword(username: string, email: string) {
     if (!username || !email) return { code: 400 };
 
     const queryString = 'SELECT id, username, email FROM users WHERE username=? && email=? LIMIT 1;';
@@ -228,12 +228,32 @@ export const resetPassword = async (username: string, email: string) => {
         return { code: 500 };
     }
 
-};
+}
 
-export const getRideDataByUser = async (id: number) => {
+export async function getRideDataByUser(id: number) {
     const queryString = 'SELECT username FROM users WHERE username=? LIMIT 1;';
-    const queryParams = [
-        id,
-    ];
+    const queryParams = [id];
     return await runQuery(queryString, queryParams);
-};
+}
+
+export async function addRideData(userId: number, date: Date, distance: number, timeDuration: string | undefined, avgSpeed: number | undefined, temperature: string, windSpeed: string, windDir: string, location: string, notes: string | undefined) {
+    if (!userId || !date || !distance) return null;
+
+    const queryString = 'INSERT INTO data (user_id, date, distance, time_duration, avg_speed, temperature, wind_speed, wind_dir, location, notes) VALUES (?, ?, ?, ?, "user", ?);';
+    const queryParams = [
+        userId,
+        date,
+        distance,
+        timeDuration || '',
+        avgSpeed || null,
+        temperature || '',
+        windSpeed || '',
+        windDir || '',
+        location || '',
+        notes || '',
+    ];
+
+    const result = await runQuery(queryString, queryParams);
+
+    return result?.insertId ? { code: 201 } : { code: 500 };
+}

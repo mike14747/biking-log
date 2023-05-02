@@ -15,7 +15,7 @@ CREATE TABLE users (
 
 CREATE TABLE data (
     id int UNSIGNED NOT NULL AUTO_INCREMENT,
-    user_id int UNSIGNED NULL,
+    user_id int UNSIGNED NOT NULL,
     date date NOT NULL,
     distance decimal(5,2) NOT NULL,
     time_duration time,
