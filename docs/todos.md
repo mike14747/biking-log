@@ -11,3 +11,10 @@ Get a new biking-log.noreply@gmail.com email address and switch over to it (incl
 Finish moving everything to the appDir (pages, components and api routes)
 
 Add a salt column to the database
+
+**Done**:
+
+Convert these database fields (from/to) in the database (resetPasswordToken remains in next-auth and in the cookie):
+
+-   resetPasswordToken to reset_password_token
+-   resetPasswordExpires to reset_password_expires

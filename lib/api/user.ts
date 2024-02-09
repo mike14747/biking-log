@@ -112,14 +112,14 @@ export async function changePassword(id: number, password: string, token = null)
 
     if (token) {
         // since a token is being passed, get the expiration date/time of the token if it exists in the db
-        const queryString = 'SELECT id, resetPasswordExpires FROM users WHERE id=? && resetPasswordToken=?;';
+        const queryString = 'SELECT id, reset_password_expires FROM users WHERE id=? && reset_password_token=?;';
         const queryParams = [id, token];
         const tokenValidCheck = await runQuery(queryString, queryParams);
         if (tokenValidCheck?.rows.length !== 1) return { code: 406 };
         const tokenToCheck = tokenValidCheck.rows[0] as TokenValid;
 
         // make sure token is found and is not expired
-        if (tokenToCheck?.resetPasswordExpires < new Date(Date.now())) return { code: 412 };
+        if (tokenToCheck?.reset_password_expires < new Date(Date.now())) return { code: 412 };
     }
 
     const salt = generateRandom(32);
@@ -214,7 +214,7 @@ export async function resetPassword(username: string, email: string) {
 
     // add the reset token and expiration date to the user in the db
     const expiresDate = new Date(Date.now() + (60 * 60 * 1000));
-    const queryString2 = 'UPDATE users SET resetPasswordToken=?, resetPasswordExpires=? WHERE id=?;';
+    const queryString2 = 'UPDATE users SET reset_password_token=?, reset_password_expires=? WHERE id=?;';
     const queryParams2 = [token, expiresDate, id];
     const updateResult = await runQuery(queryString2, queryParams2);
 

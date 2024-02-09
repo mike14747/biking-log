@@ -14,7 +14,7 @@ export type UserInfo = {
 
 export type TokenValid = {
     id: number;
-    resetPasswordExpires: Date;
+    reset_password_expires: Date;
 }
 
 export type UserBasic = {
