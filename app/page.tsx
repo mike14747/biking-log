@@ -14,16 +14,36 @@ export default async function Home() {
     return (
         <main id="main">
             {!session &&
-                <p>
-                    Since you are not logged in, display some component that describes what this app does... and prompts them to login or register.
-                </p>
+                <article>
+                    <h1 className="page-heading">
+                        Biking Log
+                    </h1>
+
+                    <p>
+                        Use this app to log, track, review and compare your bike riding history/progress.
+                    </p>
+
+                    <p>
+                        <Link href="/login?callbackUrl=/">
+                            Login
+                        </Link>
+
+                        <span>&nbsp;or&nbsp;</span>
+
+                        <Link href={'/register'}>
+                            Register
+                        </Link>
+
+                        <span>&nbsp;to begin.</span>
+                    </p>
+                </article>
             }
 
             {session &&
                 <article>
-                    <h2 className="page-heading">
+                    <h1 className="page-heading">
                         Dashboard
-                    </h2>
+                    </h1>
 
                     <p>
                         You are logged in, so this will be your dashboard.

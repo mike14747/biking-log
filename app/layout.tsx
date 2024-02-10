@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import type { Metadata } from 'next';
+import type { Viewport } from 'next';
 // eslint-disable-next-line camelcase
 import { Open_Sans } from 'next/font/google';
 import ClientSessionProvider from '@/components/ClientSessionProvider';
@@ -26,11 +27,6 @@ const openSans = Open_Sans({
 export const metadata: Metadata = {
     title: 'Biking Log',
     description: 'Log all your bike riding data',
-    viewport: {
-        width: 'device-width',
-        initialScale: 1,
-        maximumScale: 1,
-    },
     icons: {
         icon: [
             {
@@ -43,6 +39,12 @@ export const metadata: Metadata = {
             },
         ],
     },
+};
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
 };
 
 export default async function RootLayout({ children, session }: RootLayoutProps) {

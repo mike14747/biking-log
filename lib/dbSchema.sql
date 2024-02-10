@@ -6,8 +6,8 @@ CREATE TABLE users (
     email varchar(255) NOT NULL,
     role varchar(255) NOT NULL,
     registered_date date NOT NULL,
-    resetPasswordToken varchar(255) DEFAULT NULL,
-    resetPasswordExpires datetime DEFAULT NULL,
+    reset_password_token varchar(255) DEFAULT NULL,
+    reset_password_expires datetime DEFAULT NULL,
     PRIMARY KEY (id)
 );
 

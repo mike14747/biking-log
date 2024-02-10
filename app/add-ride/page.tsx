@@ -19,9 +19,9 @@ export default async function AddRide() {
     return (
         <main id="main">
             <article className="mw-75ch">
-                <h2 className="page-heading">
+                <h1 className="page-heading">
                     Add Ride Data
-                </h2>
+                </h1>
 
                 <AddRideForm />
             </article>

@@ -158,7 +158,7 @@ a[href]:active::after {
     margin-right: auto;
 }
 
-h2.page-heading {
+.page-heading {
     text-align: left;
     border-bottom: 2px var(--mg-gray-2) solid;
     padding-bottom: 1rem;

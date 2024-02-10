@@ -44,9 +44,6 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
-    experimental: {
-        appDir: true,
-    },
     reactStrictMode: true,
     async headers() {
         return [
