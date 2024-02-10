@@ -9,9 +9,9 @@ export default async function Register() {
     return (
         <main id="main">
             <article>
-                <h2 className="page-heading">
+                <h1 className="page-heading">
                     Register
-                </h2>
+                </h1>
 
                 {session &&
                     <p className="error">

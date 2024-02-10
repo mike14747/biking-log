@@ -7,6 +7,10 @@ export const metadata: Metadata = {
 export default function ResetPasswordSuccess() {
     return (
         <main id="main">
+            <h1 className="page-heading">
+                Password Reset
+            </h1>
+
             <p className='reset-password-success'>You have successfully updated your password!</p>
         </main>
     );

@@ -37,9 +37,9 @@ export default async function Login({ searchParams }: LoginProps) {
     return (
         <main id="main">
             <article>
-                <h2 className="page-heading">
+                <h1 className="page-heading">
                     Login
-                </h2>
+                </h1>
 
                 <LoginForm redirectUrl={redirectUrl} />
             </article>
