@@ -30,3 +30,17 @@ export type IdParams = {
         id: string;
     }
 }
+
+export type DataParams = {
+    params: {
+        id: string;
+        dataId: string;
+    }
+}
+
+export type YearParams = {
+    params: {
+        id: string;
+        year: string;
+    }
+}

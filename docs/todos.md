@@ -1,5 +1,3 @@
-Find a remote SQL server to use with this app... maybe mariaDB on AWS?
-
 Style the Header and Footer
 
 Start working on how to add bike riding data
@@ -18,3 +16,5 @@ Convert these database fields (from/to) in the database (resetPasswordToken rema
 
 -   resetPasswordToken to reset_password_token
 -   resetPasswordExpires to reset_password_expires
+
+Find a remote SQL server to use with this app... maybe mariaDB on AWS? So far I've gone with Planet Scale.
