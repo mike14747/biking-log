@@ -5,6 +5,7 @@ import FormInput from '@/components/FormInput';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import { StatusCodeObj } from '@/types/misc-types';
+import { datePattern, dateErrorMsg } from '@/lib/formInputPatterns';
 
 type RideData = {
     date: string;
@@ -100,6 +101,8 @@ export default function AddRideForm() {
                     type="text"
                     required={true}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.date = e.target.value}
+                    pattern={datePattern}
+                    errorMsg={dateErrorMsg}
                 />
 
                 <FormInput
@@ -116,7 +119,7 @@ export default function AddRideForm() {
                     label="Time Duration"
                     name="time_duration"
                     type="text"
-                    required={true}
+                    required={false}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.time_duration = e.target.value}
                 />
 
@@ -125,7 +128,7 @@ export default function AddRideForm() {
                     label="Avg Speed"
                     name="avg_speed"
                     type="text"
-                    required={true}
+                    required={false}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.avg_speed = e.target.value}
                 />
 
@@ -134,7 +137,7 @@ export default function AddRideForm() {
                     label="Temperature"
                     name="temperature"
                     type="text"
-                    required={true}
+                    required={false}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.temperature = e.target.value}
                 />
 
@@ -143,7 +146,7 @@ export default function AddRideForm() {
                     label="Wind Speed"
                     name="wind_speed"
                     type="text"
-                    required={true}
+                    required={false}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.wind_speed = e.target.value}
                 />
 
@@ -152,7 +155,7 @@ export default function AddRideForm() {
                     label="Wind Direction"
                     name="wind_dir"
                     type="text"
-                    required={true}
+                    required={false}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.wind_dir = e.target.value}
                 />
 
@@ -161,7 +164,7 @@ export default function AddRideForm() {
                     label="Location"
                     name="location"
                     type="text"
-                    required={true}
+                    required={false}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.location = e.target.value}
                 />
 

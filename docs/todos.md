@@ -8,7 +8,7 @@ Get a new biking-log.noreply@gmail.com email address and switch over to it (incl
 
 Finish moving everything to the appDir (pages, components and api routes)
 
-Add a salt column to the database
+Figure out the formInputPaterns don't seem to be working.
 
 **Done**:
 
@@ -18,3 +18,5 @@ Convert these database fields (from/to) in the database (resetPasswordToken rema
 -   resetPasswordExpires to reset_password_expires
 
 Find a remote SQL server to use with this app... maybe mariaDB on AWS? So far I've gone with Planet Scale.
+
+Add a salt column to the users table in the database
