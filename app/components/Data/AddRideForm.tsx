@@ -98,9 +98,9 @@ export default function AddRideForm() {
                     id="date"
                     label="Date"
                     name="date"
-                    type="text"
+                    type="date"
                     required={true}
-                    handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.date = e.target.value}
+                    handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.date = e.target?.value}
                     pattern={datePattern}
                     errorMsg={dateErrorMsg}
                 />
