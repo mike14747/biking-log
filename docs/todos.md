@@ -14,6 +14,10 @@ Finish moving everything to the appDir (pages, components and api routes)
 
 Figure out the formInputPatterns don't seem to be working.
 
+Fix the regex error in the formInputPatterns so they can accept dashes.
+
+Move the error div in FormInput inside the label element.
+
 ## Done
 
 Convert these database fields (from/to) in the database (resetPasswordToken remains in next-auth and in the cookie):
