@@ -272,3 +272,10 @@ a[href]:active::after {
     max-width: 60ch;
     margin: 0 auto;
 }
+
+/* override the wrapper class that comes with react-datepicker */
+
+div.react-datepicker-wrapper,
+div.react-datepicker__input-container {
+    display: block;
+}

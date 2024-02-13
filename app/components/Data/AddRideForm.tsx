@@ -47,11 +47,11 @@ export default function AddRideForm() {
     const handleDataSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // const id = 4;
-
         setIsSubmitting(true);
 
-        // const res = await fetch('/api/users/' + id + '/data', {
+        console.log(state.current);
+
+        // const res = await fetch('/api/data', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json;charset=utf-8',
@@ -95,27 +95,16 @@ export default function AddRideForm() {
             }
 
             <form onSubmit={handleDataSubmit} className="form">
-                {/* <FormInput
-                    id="date"
-                    label="Date"
-                    name="date"
-                    type="date"
-                    required={true}
-                    handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.date = e.target?.value}
-                    pattern={datePattern}
-                    errorMsg={dateErrorMsg}
-                /> */}
-
                 <FormInputDatePicker
                     id="date"
                     label="Date"
                     name="date"
-                    onChange={handleDateChange}
                     dateFormat="yyyy-MM-dd"
                     required={true}
                     handleChange={(date: Date | null) => state.current.date = date}
                     pattern={datePattern}
                     errorMsg={dateErrorMsg}
+                    date={new Date()}
                 />
 
                 <FormInput
