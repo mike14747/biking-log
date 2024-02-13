@@ -28,12 +28,14 @@
         "next-auth": "^4.24.5",
         "nodemailer": "^6.9.9",
         "react": "^18.2.0",
+        "react-datepicker": "^6.1.0",
         "react-dom": "^18.2.0"
     },
     "devDependencies": {
         "@types/node": "^20.11.17",
         "@types/nodemailer": "^6.4.14",
         "@types/react": "^18.2.55",
+        "@types/react-datepicker": "^4.19.6",
         "@typescript-eslint/eslint-plugin": "^6.21.0",
         "@typescript-eslint/parser": "^6.21.0",
         "eslint": "^8.56.0",

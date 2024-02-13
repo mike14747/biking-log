@@ -2,13 +2,14 @@
 
 import { FormEvent, ChangeEvent, useRef, useState } from 'react';
 import FormInput from '@/components/FormInput';
+import FormInputDatePicker from '@/components/FormInputDatePicker';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import { StatusCodeObj } from '@/types/misc-types';
 import { datePattern, dateErrorMsg } from '@/lib/formInputPatterns';
 
 type RideData = {
-    date: string;
+    date: Date | null;
     distance: string;
     time_duration: string;
     avg_speed: string;
@@ -28,7 +29,7 @@ const statusCodeErrorMessages: StatusCodeObj = {
 
 export default function AddRideForm() {
     const state = useRef<RideData>({
-        date: '',
+        date: null,
         distance: '',
         time_duration: '',
         avg_speed: '',
@@ -46,11 +47,11 @@ export default function AddRideForm() {
     const handleDataSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
-        // const id = 4;
-
         setIsSubmitting(true);
 
-        // const res = await fetch('/api/users/' + id + '/data', {
+        console.log(state.current);
+
+        // const res = await fetch('/api/data', {
         //     method: 'POST',
         //     headers: {
         //         'Content-Type': 'application/json;charset=utf-8',
@@ -94,15 +95,16 @@ export default function AddRideForm() {
             }
 
             <form onSubmit={handleDataSubmit} className="form">
-                <FormInput
+                <FormInputDatePicker
                     id="date"
                     label="Date"
                     name="date"
-                    type="text"
+                    dateFormat="yyyy-MM-dd"
                     required={true}
-                    handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.date = e.target.value}
+                    handleChange={(date: Date | null) => state.current.date = date}
                     pattern={datePattern}
                     errorMsg={dateErrorMsg}
+                    date={new Date()}
                 />
 
                 <FormInput
