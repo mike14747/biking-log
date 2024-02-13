@@ -2,13 +2,14 @@
 
 import { FormEvent, ChangeEvent, useRef, useState } from 'react';
 import FormInput from '@/components/FormInput';
+import FormInputDatePicker from '@/components/FormInputDatePicker';
 import Button from '@/components/Button';
 import Spinner from '@/components/Spinner';
 import { StatusCodeObj } from '@/types/misc-types';
 import { datePattern, dateErrorMsg } from '@/lib/formInputPatterns';
 
 type RideData = {
-    date: string;
+    date: Date | null;
     distance: string;
     time_duration: string;
     avg_speed: string;
@@ -28,7 +29,7 @@ const statusCodeErrorMessages: StatusCodeObj = {
 
 export default function AddRideForm() {
     const state = useRef<RideData>({
-        date: '',
+        date: null,
         distance: '',
         time_duration: '',
         avg_speed: '',
@@ -94,13 +95,25 @@ export default function AddRideForm() {
             }
 
             <form onSubmit={handleDataSubmit} className="form">
-                <FormInput
+                {/* <FormInput
                     id="date"
                     label="Date"
                     name="date"
                     type="date"
                     required={true}
                     handleChange={(e: ChangeEvent<HTMLInputElement>) => state.current.date = e.target?.value}
+                    pattern={datePattern}
+                    errorMsg={dateErrorMsg}
+                /> */}
+
+                <FormInputDatePicker
+                    id="date"
+                    label="Date"
+                    name="date"
+                    onChange={handleDateChange}
+                    dateFormat="yyyy-MM-dd"
+                    required={true}
+                    handleChange={(date: Date | null) => state.current.date = date}
                     pattern={datePattern}
                     errorMsg={dateErrorMsg}
                 />

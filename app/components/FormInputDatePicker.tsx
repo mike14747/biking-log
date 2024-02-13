@@ -1,4 +1,7 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, useState } from 'react';
+
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import styles from '@/styles/FormInput.module.css';
 
@@ -10,47 +13,41 @@ type FormInputProps = {
     errorMsg?: string;
     required?: boolean;
     size?: 'small' | 'normal';
-    type?: 'text' | 'number' | 'password' | 'date' | 'email' | 'tel' | 'url' | 'time' | 'checkbox';
     placeholder?: string;
     pattern?: string;
-    step?: string;
-    checked?: boolean;
     value?: string;
-    maxLength?: number;
     readOnly?: boolean;
     disabled?: boolean;
 }
 
 const sizes = ['small', 'normal'];
 
-export default function FormInput({ id, label = '', name, handleChange, errorMsg = '', required = false, size = 'normal', type = 'text', placeholder = '', ...rest }: FormInputProps) {
+export default function FormInputDatePicker({ id, label = '', name, handleChange, errorMsg = '', required = false, size = 'normal' }: FormInputProps) {
     const inputSize = sizes?.includes(size) ? size : 'normal';
 
-    const { checked } = { ...rest };
+    const [selectedDate, setSelectedDate] = useState<Date | null>(new Date());
+
+    const handleDateChange = (date: Date | null) => {
+        setSelectedDate(date);
+    };
 
     return (
         <div className={styles.inputWrapper}>
-            <label htmlFor={id} className={`${styles.label} ${styles[inputSize]} ${type === 'checkbox' ? styles.labelCheckbox : ''}`}>
+            <label htmlFor={id} className={`${styles.label} ${styles[inputSize]}`}>
                 {label}
 
                 {/* you can comment out the following line if you don't want to notify the user of fields that are required */}
                 {required && <span className={styles.required}>*required</span>}
 
-                <input
+                <DatePicker
                     id={id}
                     name={name}
-                    className={`${styles.input} ${styles[inputSize]}`}
-                    onChange={handleChange}
+                    selected={selectedDate}
+                    onChange={handleDateChange}
+                    dateFormat="yyyy-MM-dd"
                     required={required}
-                    size={30}
-                    type={type}
-                    placeholder={placeholder}
-                    {...rest}
+                    className={`${styles.input} ${styles[inputSize]}`}
                 />
-
-                {type === 'checkbox' &&
-                    <div role="checkbox" aria-checked={checked || false} tabIndex={0} aria-labelledby={label} className={styles.fakeCheckbox}></div>
-                }
             </label>
 
             {errorMsg &&
