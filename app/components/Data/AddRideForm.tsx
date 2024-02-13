@@ -99,7 +99,7 @@ export default function AddRideForm() {
                     id="date"
                     label="Date"
                     name="date"
-                    dateFormat="yyyy-MM-dd"
+                    dateFormat="MMMM d, yyyy"
                     required={true}
                     handleChange={(date: Date | null) => state.current.date = date}
                     pattern={datePattern}
