@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getAllRideDataByUser, addRideData } from '@/lib/api/data';
 import { getToken } from 'next-auth/jwt';
-import { handleAPICatchError } from '@/lib/handleCatchErrors';
+import { handleAPIError } from '@/lib/handleErrors';
 
 // this route used to get all data for a user if the method is GET
 export async function GET(request: NextRequest) {
@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
         const data = await getAllRideDataByUser(parseInt(userId));
         return data ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }
 

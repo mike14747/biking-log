@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { changeEmail } from '@/lib/api/user';
 import { IdParams } from '@/types/misc-types';
-import { handleAPICatchError } from '@/lib/handleCatchErrors';
+import { handleAPIError } from '@/lib/handleErrors';
 
 export async function PUT(request: NextRequest, { params }: IdParams) {
     try {
@@ -18,6 +18,6 @@ export async function PUT(request: NextRequest, { params }: IdParams) {
         const result = await changeEmail(parseInt(id), email);
         return result.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }

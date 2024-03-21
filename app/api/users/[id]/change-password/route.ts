@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { changePassword } from '@/lib/api/user';
 import { IdParams } from '@/types/misc-types';
-import { handleAPICatchError } from '@/lib/handleCatchErrors';
+import { handleAPIError } from '@/lib/handleErrors';
 
 export async function PUT(request: NextRequest, { params }: IdParams) {
     try {
@@ -24,6 +24,6 @@ export async function PUT(request: NextRequest, { params }: IdParams) {
 
         return NextResponse.json(null, { status: 400 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }

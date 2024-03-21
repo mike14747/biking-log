@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { forgottenUsername } from '@/lib/api/user';
-import { handleAPICatchError } from '@/lib/handleCatchErrors';
+import { handleAPIError } from '@/lib/handleErrors';
 
 export async function POST(request: NextRequest) {
     try {
@@ -10,6 +10,6 @@ export async function POST(request: NextRequest) {
         const result = await forgottenUsername(email);
         return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }

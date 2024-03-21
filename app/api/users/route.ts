@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getInfoForAllUsers, registerNewUser } from '@/lib/api/user';
 import { getToken } from 'next-auth/jwt';
-import { handleAPICatchError } from '@/lib/handleCatchErrors';
+import { handleAPIError } from '@/lib/handleErrors';
 
 // get info for all users, but only if the user is logged in and has a role of admin
 export async function GET(request: NextRequest) {
@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
         const data = await getInfoForAllUsers();
         return data ? NextResponse.json(data, { status: 200 }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }
 
@@ -25,6 +25,6 @@ export async function POST(request: NextRequest) {
         const result = await registerNewUser(username, password, email);
         return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }

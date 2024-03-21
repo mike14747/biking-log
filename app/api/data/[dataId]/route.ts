@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { editRideData, deleteRideData } from '@/lib/api/data';
 import { getToken } from 'next-auth/jwt';
 import type { DataParams } from '@/types/misc-types';
-import { handleAPICatchError } from '@/lib/handleCatchErrors';
+import { handleAPIError } from '@/lib/handleErrors';
 
 // this route used to edit data for a single ride if the http method is PUT
 export async function PUT(request: NextRequest, { params }: DataParams) {
@@ -19,7 +19,7 @@ export async function PUT(request: NextRequest, { params }: DataParams) {
         const result = await editRideData(parseInt(dataId), parseInt(userId), date, distance, timeDuration, avgSpeed, temperature, windSpeed, windDir, location, notes);
         return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }
 
@@ -35,6 +35,6 @@ export async function DELETE(request: NextRequest, { params }: DataParams) {
         const result = await deleteRideData(parseInt(dataId), parseInt(userId));
         return result?.code ? NextResponse.json(null, { status: result.code }) : NextResponse.json(null, { status: 500 });
     } catch (error) {
-        return handleAPICatchError(error);
+        return handleAPIError(error);
     }
 }
